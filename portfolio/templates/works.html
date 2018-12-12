@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+{% block content %}
+    <section id="works">
+        <div class="row work-item">
+            <div class="col-sm-4 col-md-4">
+                <img src="{{ url_for('static', filename='img/street_artist_2048.jpg') }}"
+                     srcset="{{ url_for('static', filename='img/street_artist_300.jpg') }} 300w,
+                             {{ url_for('static', filename='img/street_artist_600.jpg') }} 600w,
+                             {{ url_for('static', filename='img/street_artist_1200.jpg') }} 1200w,
+                             {{ url_for('static', filename='img/street_artist_2048.jpg') }} 2048w"
+                     alt="Street Artist"
+                     class="img-fluid">
+            </div>
+
+            <div class="col-sm-8 col-md-8">
+                <h4 class="title">Street Artist</h4>
+
+                <a class="url" href="http://example.com">http://example.com/</a>
+
+                <p class="description">
+                    Phasellus non massa arcu. Sed in ligula et urna euismod posuere vel interdum odio. Praesent
+                    porttitor sagittis ante et tristique. Aenean sodales finibus eleifend. Fusce bibendum placerat ante
+                    id aliquam. Fusce et elit mi.
+                </p>
+            </div>
+        </div>
+
+        <div class="row work-item">
+            <div class="col-sm-4 col-md-4">
+                <img src="{{ url_for('static', filename='img/fireworks_2048.jpg') }}"
+                     srcset="{{ url_for('static', filename='img/fireworks_300.jpg') }} 300w,
+                             {{ url_for('static', filename='img/fireworks_600.jpg') }} 600w,
+                             {{ url_for('static', filename='img/fireworks_1200.jpg') }} 1200w,
+                             {{ url_for('static', filename='img/fireworks_2048.jpg') }} 2048w"
+                     alt="Fireworks"
+                     class="img-fluid">
+            </div>
+
+            <div class="col-sm-8 col-md-8">
+                <h4 class="title">Fireworks</h4>
+
+                <a class="url" href="http://example.com">http://example.com/</a>
+
+                <p class="description">
+                    Suspendisse rutrum neque eu ex ullamcorper, sed placerat justo tincidunt. Pellentesque tincidunt
+                    sodales eros, at cursus urna feugiat sit amet. Aliquam ac libero porta, viverra sapien et, aliquam
+                    orci. Vestibulum cursus, justo non tempus malesuada, erat ligula tristique eros, maximus suscipit
+                    felis nibh ut ante. Ut euismod convallis ipsum, id eleifend risus.
+                </p>
+            </div>
+        </div>
+
+        <div class="row work-item">
+            <div class="col-sm-4 col-md-4">
+                <img src="{{ url_for('static', filename='img/canada_place_2048.jpg') }}"
+                     srcset="{{ url_for('static', filename='img/canada_place_300.jpg') }} 300w,
+                             {{ url_for('static', filename='img/canada_place_600.jpg') }} 600w,
+                             {{ url_for('static', filename='img/canada_place_1200.jpg') }} 1200w,
+                             {{ url_for('static', filename='img/canada_place_2048.jpg') }} 2048w"
+                     alt="Canada Place"
+                     class="img-fluid">
+            </div>
+
+            <div class="col-sm-8 col-md-8">
+                <h4 class="title">Canada Place</h4>
+
+                <a class="url" href="http://example.com">http://example.com/</a>
+
+                <p class="description">
+
+                    Nunc et risus tristique, laoreet velit at, cursus dui. Quisque eu egestas nisi. Etiam ut tristique
+                    diam. Morbi rutrum malesuada laoreet. Curabitur interdum sem eget nisl pulvinar, ac rhoncus nunc
+                    viverra. Morbi elementum elit sit amet lorem tempor, a pretium elit elementum. Vivamus id purus
+                    nibh. Sed blandit turpis ut sollicitudin suscipit.
+                </p>
+            </div>
+        </div>
+
+        <div class="row work-item">
+            <div class="col-sm-4 col-md-4">
+                <img src="{{ url_for('static', filename='img/grand_canal_2048.jpg') }}"
+                     srcset="{{ url_for('static', filename='img/grand_canal_300.jpg') }} 300w,
+                             {{ url_for('static', filename='img/grand_canal_600.jpg') }} 600w,
+                             {{ url_for('static', filename='img/grand_canal_1200.jpg') }} 1200w,
+                             {{ url_for('static', filename='img/grand_canal_2048.jpg') }} 2048w"
+                     alt="Grand Canal"
+                     class="img-fluid">
+            </div>
+
+            <div class="col-sm-8 col-md-8">
+                <h4 class="title">Grand Canal</h4>
+
+                <a class="url" href="http://example.com">http://example.com/</a>
+
+                <p class="description">
+                    Etiam tristique vitae turpis sit amet efficitur. Sed tincidunt, magna ut ullamcorper semper, eros ex
+                    pretium sapien, in sollicitudin justo purus at erat. Suspendisse sed velit sit amet lorem congue
+                    hendrerit. Aliquam bibendum pretium mauris, quis volutpat sem pretium id. Integer quis metus sed
+                    augue pulvinar venenatis quis ac massa.
+                </p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

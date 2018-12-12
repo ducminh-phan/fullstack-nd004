@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block content %}
+    <section id="info">
+        <div class="row">
+            <div class="d-none d-sm-block col-sm-3 col-md-3">
+                <img src="{{ url_for('static', filename='img/logo.jpeg') }}"
+                     alt="Avatar"
+                     class="img-thumbnail img-fluid">
+            </div>
+            <div class="col-sm-9 col-md-9 text-right text-uppercase">
+                <h1>Duc-Minh Phan</h1>
+                <h3>Some slogan</h3>
+            </div>
+        </div>
+    </section>
+
+    <hr/>
+
+    <section id="banner">
+        <img src="{{ url_for('static', filename='img/banner_2048.jpg') }}"
+             srcset="{{ url_for('static', filename='img/banner_512.jpg') }} 512w,
+                     {{ url_for('static', filename='img/banner_1024.jpg') }} 1024w"
+             sizes="100vw"
+             alt="Banner"
+             class="img-fluid">
+    </section>
+
+    <section id="feature-work">
+        <h3>Featured Work</h3>
+
+        <div class="row text-center">
+            <div class="col-sm-12 col-md-6 feature-work-item">
+                <picture>
+                    <source media="(max-width: 330px)"
+                            srcset="{{ url_for('static', filename='img/street_artist_300.jpg') }}">
+                    <source media="(min-width: 331px) and (max-width: 630px)"
+                            srcset="{{ url_for('static', filename='img/street_artist_600.jpg') }}">
+                    <source media="(min-width: 631px) and (max-width: 768px)"
+                            srcset="{{ url_for('static', filename='img/street_artist_1200.jpg') }}">
+                    <img src="{{ url_for('static', filename='img/street_artist_2048.jpg') }}"
+                         alt="Street Artist"
+                         class="img-fluid">
+                </picture>
+
+                <h4 class="title">Street Artist</h4>
+
+                <a class="url" href="http://example.com">http://example.com/</a>
+            </div>
+
+            <div class="col-sm-12 col-md-6 feature-work-item">
+                <img src="{{ url_for('static', filename='img/fireworks_2048.jpg') }}"
+                     srcset="{{ url_for('static', filename='img/fireworks_300.jpg') }} 300w,
+                             {{ url_for('static', filename='img/fireworks_600.jpg') }} 600w,
+                             {{ url_for('static', filename='img/fireworks_1200.jpg') }} 1200w,
+                             {{ url_for('static', filename='img/fireworks_2048.jpg') }} 2048w"
+                     sizes="(max-width: 767px) 100vw,
+                            50vw"
+                     alt="Fireworks"
+                     class="img-fluid">
+
+                <h4 class="title">Fireworks</h4>
+
+                <a class="url" href="http://example.com">http://example.com/</a>
+            </div>
+
+            <div class="col-sm-12 col-md-6 feature-work-item">
+                <img src="{{ url_for('static', filename='img/canada_place_2048.jpg') }}"
+                     srcset="{{ url_for('static', filename='img/canada_place_300.jpg') }} 300w,
+                             {{ url_for('static', filename='img/canada_place_600.jpg') }} 600w,
+                             {{ url_for('static', filename='img/canada_place_1200.jpg') }} 1200w,
+                             {{ url_for('static', filename='img/canada_place_2048.jpg') }} 2048w"
+                     sizes="(max-width: 767px) 100vw,
+                            50vw"
+                     alt="Canada Place"
+                     class="img-fluid">
+
+                <h4 class="title">Canada Place</h4>
+
+                <a class="url" href="http://example.com">http://example.com/</a>
+            </div>
+
+            <div class="col-sm-12 col-md-6 feature-work-item">
+                <img src="{{ url_for('static', filename='img/grand_canal_2048.jpg') }}"
+                     srcset="{{ url_for('static', filename='img/grand_canal_300.jpg') }} 300w,
+                             {{ url_for('static', filename='img/grand_canal_600.jpg') }} 600w,
+                             {{ url_for('static', filename='img/grand_canal_1200.jpg') }} 1200w,
+                             {{ url_for('static', filename='img/grand_canal_2048.jpg') }} 2048w"
+                     sizes="(max-width: 767px) 100vw,
+                            50vw"
+                     alt="Grand Canal"
+                     class="img-fluid">
+
+                <h4 class="title">Grand Canal</h4>
+
+                <a class="url" href="http://example.com">http://example.com/</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
