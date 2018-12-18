@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block script %}
+{% endblock %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <form method="post">
+            <div class="row">
+                <label for="username">Username</label>
+                <input name="username" id="username" required>
+            </div>
+            <div class="row">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <div class="row">
+                <input type="submit" value="Log In">
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-6"><a href="/login/google">Sign in with Google</a></div>
+        <div class="col-md-6"><a href="/login/facebook">Sign in with Facebook</a></div>
+    </div>
+{% endblock %}
