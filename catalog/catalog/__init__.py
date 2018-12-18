@@ -4,8 +4,8 @@ from flask import Flask
 
 from instance.config import DBConfig, SECRET_KEY
 from .auth import auth_bp
-from .dance import google_bp
 from .extensions import db, login_manager
+from .oauth import google_bp, github_bp
 
 
 def create_app(test_config=None):
@@ -31,6 +31,7 @@ def create_app(test_config=None):
         pass
 
     app.register_blueprint(google_bp, url_prefix="/login")
+    app.register_blueprint(github_bp, url_prefix="/login")
     app.register_blueprint(auth_bp)
     register_extensions(app)
 

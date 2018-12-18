@@ -1,18 +1,9 @@
-from flask import (
-    Blueprint,
-    render_template,
-    redirect,
-    session,
-    request,
-    flash,
-    current_app,
-    abort,
-)
-from flask_dance.contrib.google import google
+from flask import Blueprint, render_template, redirect, request, flash, abort
 from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .crud import get_user_by_username, get_user_by_email, add_user
+from .oauth import get_email_from_oauth
 from .utils import is_safe_url
 
 auth_bp = Blueprint("auth", __name__)
@@ -20,8 +11,6 @@ auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/")
 def index():
-    print(session)
-
     return render_template("index.html")
 
 
@@ -59,13 +48,8 @@ def login():
 @auth_bp.route("/register", methods=("GET", "POST"))
 def register():
     if request.method == "GET":
-        try:
-            resp = google.get("/plus/v1/people/me")
-            user_email = resp.json()["emails"][0]["value"]
-            user = get_user_by_email(user_email)
-        except KeyError:
-            user = None
-            user_email = ""
+        user_email = get_email_from_oauth()
+        user = get_user_by_email(user_email)
 
         # Register the user if does not exist in the database yet,
         # otherwise, redirect to the index page
@@ -107,16 +91,6 @@ def register():
 @auth_bp.route("/logout")
 @login_required
 def logout():
-    try:
-        token = current_app.blueprints["google"].token["access_token"]
-        google.post(
-            "https://accounts.google.com/o/oauth2/revoke",
-            params={"token": token},
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
-        )
-    except TypeError:
-        pass
-
     logout_user()
 
     return redirect("/")
