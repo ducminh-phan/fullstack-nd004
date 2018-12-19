@@ -30,12 +30,16 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    app.register_blueprint(google_bp, url_prefix="/login")
-    app.register_blueprint(github_bp, url_prefix="/login")
-    app.register_blueprint(auth_bp)
+    register_blueprints(app)
     register_extensions(app)
 
     return app
+
+
+def register_blueprints(app):
+    app.register_blueprint(google_bp, url_prefix="/login")
+    app.register_blueprint(github_bp, url_prefix="/login")
+    app.register_blueprint(auth_bp)
 
 
 def register_extensions(app):

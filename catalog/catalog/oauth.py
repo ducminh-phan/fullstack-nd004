@@ -27,12 +27,16 @@ def get_email_from_oauth() -> str:
         user_email = resp.json()["emails"][0]["value"]
     except (IndexError, KeyError):
         pass
+    except Exception as e:
+        current_app.logger.debug(e)
 
     try:
         resp = github.get("/user/emails")
         user_email = resp.json()[0]["email"]
     except (IndexError, KeyError):
         pass
+    except Exception as e:
+        current_app.logger.debug(e)
 
     return user_email
 

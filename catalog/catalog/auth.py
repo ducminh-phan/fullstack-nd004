@@ -1,9 +1,13 @@
+from typing import Optional
+
 from flask import Blueprint, render_template, redirect, request, flash, abort
 from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .crud import get_user_by_username, get_user_by_email, add_user
-from .oauth import get_email_from_oauth
+from .extensions import login_manager
+from .models import User
+from .oauth import get_email_from_oauth, revoke_token
 from .utils import is_safe_url
 
 auth_bp = Blueprint("auth", __name__)
@@ -78,7 +82,12 @@ def register():
             error = f"Email {email} is already registered."
 
         if error is None:
-            user = add_user(username, generate_password_hash(password), email)
+            user = User(
+                username=username,
+                password=generate_password_hash(password),
+                email=email,
+            )
+            add_user(user)
             login_user(user)
 
             return redirect("/")
@@ -91,6 +100,13 @@ def register():
 @auth_bp.route("/logout")
 @login_required
 def logout():
+    revoke_token()
     logout_user()
 
     return redirect("/")
+
+
+@login_manager.user_loader
+def get_user_by_id(user_id: int) -> Optional[User]:
+    user = User.query.filter_by(id=user_id).first()
+    return user

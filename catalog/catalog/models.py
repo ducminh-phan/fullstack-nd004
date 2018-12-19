@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(200), nullable=False)
 
 
-class Catalog(db.Model):
+class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
 
@@ -23,5 +23,5 @@ class Item(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.relationship(User)
 
-    catalog_id = db.Column(db.Integer, db.ForeignKey("catalog.id"))
-    catalog = db.relationship(Catalog)
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
+    category = db.relationship(Category)
