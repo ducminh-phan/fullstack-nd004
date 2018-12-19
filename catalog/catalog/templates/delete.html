@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}Delete {{ item.name }} ({{ item.category.name }}){% endblock %}
+
+{% block content %}
+    <div class="row">
+        <p>Do you really want to delete {{ item.name }} ({{ item.category.name }})?</p>
+    </div>
+    <div class="row">
+        <form method="post">
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Delete">
+            </div>
+        </form>
+    </div>
+{% endblock %}

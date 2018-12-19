@@ -24,8 +24,6 @@ def index():
     categories = get_all_categories()
     items = get_all_items()
 
-    print(categories)
-    print(items)
     return render_template("index.html", categories=categories, items=items)
 
 

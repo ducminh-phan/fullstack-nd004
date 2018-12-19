@@ -51,13 +51,10 @@ def revoke_token():
         )
     except TypeError:
         pass
+    except Exception as e:
+        current_app.logger.debug(e)
 
     try:
-        token = current_app.blueprints["github"].token["access_token"]
-        github.delete(
-            "https://github.com/applications/{}/tokens/{}".format(
-                GitHubOAuthConfig.CLIENT_ID, token
-            )
-        )
-    except TypeError:
-        pass
+        current_app.blueprints["github"].token["access_token"] = None
+    except Exception as e:
+        current_app.logger.debug(e)

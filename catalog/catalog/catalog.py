@@ -1,15 +1,16 @@
-from flask import Blueprint, render_template, request, flash, abort
+from flask import Blueprint, render_template, request, abort, redirect
 from flask_login import login_required, current_user
 
 from .crud import (
     get_category,
     get_all_categories,
-    add_category,
-    get_item,
     add_item,
+    update_item,
     get_items_by_category,
+    delete_item,
 )
-from .models import Category, Item
+from .models import Item
+from .utils import check_item_exist, check_user, check_item_form
 
 catalog_bp = Blueprint("catalog", __name__)
 
@@ -18,37 +19,12 @@ catalog_bp = Blueprint("catalog", __name__)
 @login_required
 def add():
     if request.method == "POST":
-        item_name = request.form.get("item-name")
-        description = request.form.get("item-description", "")
-        category_name = request.form.get("category")
+        form_ok, kwargs = check_item_form()
 
-        error = None
-
-        if item_name is None:
-            error = "Item name is required."
-        elif category_name is None:
-            error = "A category is required."
-
-        if error is None:
-            category = get_category(category_name)
-
-            if category is None:
-                category = Category(name=category_name)
-                add_category(category)
-
-            item = Item(
-                name=item_name,
-                description=description,
-                user_id=current_user.id,
-                category_id=category.id,
-            )
-
-            if get_item(category, item_name) is not None:
-                flash("Item already existed")
-            else:
-                add_item(item)
-        else:
-            flash(error)
+        if form_ok:
+            kwargs["user_id"] = current_user.id
+            item = Item(**kwargs)
+            add_item(item)
 
     return render_template("add.html")
 
@@ -70,15 +46,52 @@ def show_category(category_name: str):
 
 
 @catalog_bp.route("/<category_name>/<item_name>")
-def show_item(category_name: str, item_name: str):
-    category = get_category(category_name)
-
-    if category is None:
-        abort(404)
-
-    item = get_item(category, item_name)
-
-    if item is None:
-        abort(404)
+@check_item_exist
+def show_item(category_name: str, item_name: str, **kwargs):
+    category = kwargs.get("category")
+    item = kwargs.get("item")
 
     return render_template("item.html", category=category, item=item)
+
+
+@catalog_bp.route("/<category_name>/<item_name>/edit", methods=("GET", "POST"))
+@login_required
+@check_item_exist
+def edit(category_name: str, item_name: str, **kwargs):
+    category = kwargs.get("category")
+    item = kwargs.get("item")
+
+    if category is None or item is None:
+        abort(404)
+
+    author = item.user
+    check_user(author.id)
+
+    if request.method == "POST":
+        form_ok, kwargs = check_item_form()
+
+        if form_ok:
+            kwargs["user_id"] = current_user.id
+            update_item(item, kwargs)
+
+    return render_template("edit.html", item=item)
+
+
+@catalog_bp.route("/<category_name>/<item_name>/delete", methods=("GET", "POST"))
+@login_required
+@check_item_exist
+def delete(category_name: str, item_name: str, **kwargs):
+    category = kwargs.get("category")
+    item = kwargs.get("item")
+
+    if category is None or item is None:
+        abort(404)
+
+    author = item.user
+    check_user(author.id)
+
+    if request.method == "POST":
+        delete_item(item)
+        return redirect("/")
+
+    return render_template("delete.html", item=item)

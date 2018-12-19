@@ -50,3 +50,15 @@ def get_item(category: Category, item_name: str) -> Optional[Item]:
 def add_item(item: Item):
     db_session.add(item)
     db_session.commit()
+
+
+def update_item(item: Item, kwargs: dict):
+    for key, value in kwargs.items():
+        setattr(item, key, value)
+
+    db_session.commit()
+
+
+def delete_item(item: Item):
+    db_session.delete(item)
+    db_session.commit()

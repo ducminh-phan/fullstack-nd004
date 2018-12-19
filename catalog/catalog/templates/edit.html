@@ -1,0 +1,9 @@
+{% extends "add.html" %}
+
+{% block title %}Edit {{ item.name }} ({{ item.category.name }}){% endblock %}
+
+{% block item_name_placeholder %}{{ item.name }}{% endblock %}
+
+{% block item_description_placeholder %}{{ item.description }}{% endblock %}
+
+{% block category_placeholder %}{{ item.category.name }}{% endblock %}
