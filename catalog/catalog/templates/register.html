@@ -6,20 +6,20 @@
 
 {% block content %}
     <form method="post">
-        <div class="row">
+        <div class="form-group">
             <label for="username">Username</label>
             <input name="username" id="username" placeholder="{{ username }}" required>
         </div>
-        <div class="row">
+        <div class="form-group">
             <label for="password">Password</label>
             <input type="password" name="password" id="password" required>
         </div>
-        <div class="row">
+        <div class="form-group">
             <label for="email">Email</label>
             <input name="email" id="email" value="{{ email }}" required>
         </div>
-        <div class="row">
-            <input type="submit" value="Register">
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Register">
         </div>
     </form>
 {% endblock %}

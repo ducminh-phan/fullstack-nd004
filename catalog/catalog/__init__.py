@@ -4,6 +4,7 @@ from flask import Flask
 
 from instance.config import DBConfig, SECRET_KEY
 from .auth import auth_bp
+from .catalog import catalog_bp
 from .extensions import db, login_manager
 from .oauth import google_bp, github_bp
 
@@ -40,13 +41,14 @@ def register_blueprints(app):
     app.register_blueprint(google_bp, url_prefix="/login")
     app.register_blueprint(github_bp, url_prefix="/login")
     app.register_blueprint(auth_bp)
+    app.register_blueprint(catalog_bp)
 
 
 def register_extensions(app):
     db.init_app(app)
 
     login_manager.init_app(app)
-    login_manager.login_view = "login"
+    login_manager.login_view = "auth.login"
 
 
 app = create_app()

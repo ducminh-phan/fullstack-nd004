@@ -4,7 +4,13 @@ from flask import Blueprint, render_template, redirect, request, flash, abort
 from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from .crud import get_user_by_username, get_user_by_email, add_user
+from .crud import (
+    get_user_by_username,
+    get_user_by_email,
+    add_user,
+    get_all_categories,
+    get_all_items,
+)
 from .extensions import login_manager
 from .models import User
 from .oauth import get_email_from_oauth, revoke_token
@@ -15,7 +21,12 @@ auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/")
 def index():
-    return render_template("index.html")
+    categories = get_all_categories()
+    items = get_all_items()
+
+    print(categories)
+    print(items)
+    return render_template("index.html", categories=categories, items=items)
 
 
 @auth_bp.route("/login", methods=("GET", "POST"))

@@ -1,7 +1,7 @@
-from typing import Optional
+from typing import List, Optional
 
-from .models import User
 from .extensions import db
+from .models import User, Category, Item
 
 db_session = db.session
 
@@ -20,3 +20,25 @@ def add_user(user: User):
     db_session.add(user)
     db_session.commit()
 
+
+def get_all_categories() -> List[Category]:
+    return Category.query.order_by(Category.id).all()
+
+
+def get_category(name: str) -> Optional[Category]:
+    cat = Category.query.filter_by(name=name).first()
+    return cat
+
+
+def add_category(category: Category):
+    db_session.add(category)
+    db_session.commit()
+
+
+def get_all_items() -> List[Item]:
+    return Item.query.order_by(Item.id).all()
+
+
+def add_item(item: Item):
+    db_session.add(item)
+    db_session.commit()
