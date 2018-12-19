@@ -1,7 +1,14 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, abort
 from flask_login import login_required, current_user
 
-from .crud import get_category, add_category, add_item
+from .crud import (
+    get_category,
+    get_all_categories,
+    add_category,
+    get_item,
+    add_item,
+    get_items_by_category,
+)
 from .models import Category, Item
 
 catalog_bp = Blueprint("catalog", __name__)
@@ -35,8 +42,43 @@ def add():
                 user_id=current_user.id,
                 category_id=category.id,
             )
-            add_item(item)
+
+            if get_item(category, item_name) is not None:
+                flash("Item already existed")
+            else:
+                add_item(item)
         else:
             flash(error)
 
     return render_template("add.html")
+
+
+@catalog_bp.route("/<category_name>")
+def show_category(category_name: str):
+    category = get_category(category_name)
+
+    if category is None:
+        abort(404)
+
+    items = get_items_by_category(category)
+
+    all_categories = get_all_categories()
+
+    return render_template(
+        "category_items.html", categories=all_categories, category=category, items=items
+    )
+
+
+@catalog_bp.route("/<category_name>/<item_name>")
+def show_item(category_name: str, item_name: str):
+    category = get_category(category_name)
+
+    if category is None:
+        abort(404)
+
+    item = get_item(category, item_name)
+
+    if item is None:
+        abort(404)
+
+    return render_template("item.html", category=category, item=item)

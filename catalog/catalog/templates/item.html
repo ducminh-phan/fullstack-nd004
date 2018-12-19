@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ item.name }} ({{ category.name }}){% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h2>{{ item.name }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Category</h3>
+
+            <a href="/{{ category.name }}">{{ category.name }}</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Description</h3>
+
+            <p>{{ item.description }}</p>
+        </div>
+    </div>
+{% endblock %}
