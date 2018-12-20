@@ -10,7 +10,7 @@ from .crud import (
     delete_item,
 )
 from .models import Item
-from .utils import check_item_exist, check_user_is_author, check_item_form
+from .utils import check_item_exist, current_user_is_author, check_item_form
 
 catalog_bp = Blueprint("catalog", __name__)
 
@@ -50,8 +50,14 @@ def show_category(category_name: str):
 def show_item(category_name: str, item_name: str, **kwargs):
     category = kwargs.get("category")
     item = kwargs.get("item")
+    author = item.user
 
-    return render_template("item.html", category=category, item=item)
+    return render_template(
+        "item.html",
+        category=category,
+        item=item,
+        authored=current_user_is_author(author),
+    )
 
 
 @catalog_bp.route("/<category_name>/<item_name>/edit", methods=("GET", "POST"))
@@ -65,7 +71,8 @@ def edit(category_name: str, item_name: str, **kwargs):
         abort(404)
 
     author = item.user
-    check_user_is_author(author.id)
+    if not current_user_is_author(author):
+        abort(403)
 
     if request.method == "POST":
         form_ok, kwargs = check_item_form()
@@ -88,7 +95,8 @@ def delete(category_name: str, item_name: str, **kwargs):
         abort(404)
 
     author = item.user
-    check_user_is_author(author.id)
+    if not current_user_is_author(author):
+        abort(403)
 
     if request.method == "POST":
         delete_item(item)

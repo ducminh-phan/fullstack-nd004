@@ -15,9 +15,8 @@ def is_safe_url(target):
     return test_url.scheme in ("http", "https") and ref_url.netloc == test_url.netloc
 
 
-def check_user_is_author(author_id: int):
-    if author_id != current_user.id:
-        abort(403)
+def current_user_is_author(author):
+    return author.id == current_user.id
 
 
 def check_item_exist(view):
