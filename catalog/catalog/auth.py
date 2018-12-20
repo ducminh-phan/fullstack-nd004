@@ -1,6 +1,15 @@
 from typing import Optional
 
-from flask import Blueprint, render_template, redirect, request, flash, abort
+from flask import (
+    Blueprint,
+    render_template,
+    redirect,
+    request,
+    flash,
+    abort,
+    url_for,
+    session,
+)
 from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -58,20 +67,23 @@ def login():
     return render_template("login.html")
 
 
+@auth_bp.route("/oauth")
+def after_oauth():
+    user_email = get_email_from_oauth()
+    user = get_user_by_email(user_email)
+
+    # Register the user if does not exist in the database yet,
+    # otherwise, redirect to the index page
+    if not user:
+        session["user_email"] = user_email
+        return redirect(url_for("auth.register"))
+    else:
+        login_user(user)
+        return redirect("/")
+
+
 @auth_bp.route("/register", methods=("GET", "POST"))
 def register():
-    if request.method == "GET":
-        user_email = get_email_from_oauth()
-        user = get_user_by_email(user_email)
-
-        # Register the user if does not exist in the database yet,
-        # otherwise, redirect to the index page
-        if not user:
-            return render_template("register.html", email=user_email)
-        else:
-            login_user(user)
-            return redirect("/")
-
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -87,8 +99,10 @@ def register():
             error = "Email is required."
         elif get_user_by_username(username) is not None:
             error = f"User {username} is already registered."
+            username = ""
         elif get_user_by_email(email) is not None:
             error = f"Email {email} is already registered."
+            email = ""
 
         if error is None:
             user = User(
@@ -103,7 +117,9 @@ def register():
 
         flash(error)
 
-        return render_template("register.html")
+        return render_template("register.html", username=username, email=email)
+
+    return render_template("register.html", email=session["user_email"])
 
 
 @auth_bp.route("/logout")

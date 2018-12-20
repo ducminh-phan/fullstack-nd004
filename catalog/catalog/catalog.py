@@ -10,7 +10,7 @@ from .crud import (
     delete_item,
 )
 from .models import Item
-from .utils import check_item_exist, check_user, check_item_form
+from .utils import check_item_exist, check_user_is_author, check_item_form
 
 catalog_bp = Blueprint("catalog", __name__)
 
@@ -65,7 +65,7 @@ def edit(category_name: str, item_name: str, **kwargs):
         abort(404)
 
     author = item.user
-    check_user(author.id)
+    check_user_is_author(author.id)
 
     if request.method == "POST":
         form_ok, kwargs = check_item_form()
@@ -88,7 +88,7 @@ def delete(category_name: str, item_name: str, **kwargs):
         abort(404)
 
     author = item.user
-    check_user(author.id)
+    check_user_is_author(author.id)
 
     if request.method == "POST":
         delete_item(item)

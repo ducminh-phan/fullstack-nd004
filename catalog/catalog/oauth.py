@@ -8,14 +8,14 @@ google_bp = make_google_blueprint(
     client_id=GoogleOAuthConfig.CLIENT_ID,
     client_secret=GoogleOAuthConfig.CLIENT_SECRET,
     scope=["https://www.googleapis.com/auth/userinfo.email"],
-    redirect_to="auth.register",
+    redirect_to="auth.after_oauth",
 )
 
 github_bp = make_github_blueprint(
     client_id=GitHubOAuthConfig.CLIENT_ID,
     client_secret=GitHubOAuthConfig.CLIENT_SECRET,
     scope=["user:email"],
-    redirect_to="auth.register",
+    redirect_to="auth.after_oauth",
 )
 
 
