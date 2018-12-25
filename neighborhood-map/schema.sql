@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS place;
+
+CREATE TABLE place (
+  id   INT AUTO_INCREMENT
+    PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  lat  DOUBLE       NOT NULL,
+  lng  DOUBLE       NOT NULL
+);
