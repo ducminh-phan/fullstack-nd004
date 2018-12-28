@@ -2,16 +2,16 @@ import os
 
 from flask import Flask
 
+from catalog.config import config
 from catalog.extensions import db, login_manager
-from instance.config import DBConfig, SECRET_KEY
 
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY=SECRET_KEY,
+        SECRET_KEY=config.SECRET_KEY,
         SQLALCHEMY_DATABASE_URI="mysql+pymysql://{}:{}@{}:{}/catalog".format(
-            DBConfig.USERNAME, DBConfig.PASSWORD, DBConfig.HOST, DBConfig.PORT
+            config.DB.USERNAME, config.DB.PASSWORD, config.DB.HOST, config.DB.PORT
         ),
     )
 
