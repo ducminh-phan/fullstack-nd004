@@ -2,16 +2,15 @@ import os
 
 from flask import Flask
 
+from catalog.extensions import db, login_manager
 from instance.config import DBConfig, SECRET_KEY
-
-from .extensions import db, login_manager
 
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY=SECRET_KEY,
-        SQLALCHEMY_DATABASE_URI="mysql://{}:{}@{}:{}/catalog".format(
+        SQLALCHEMY_DATABASE_URI="mysql+pymysql://{}:{}@{}:{}/catalog".format(
             DBConfig.USERNAME, DBConfig.PASSWORD, DBConfig.HOST, DBConfig.PORT
         ),
     )
@@ -40,4 +39,12 @@ def register_extensions(app):
     login_manager.init_app(app)
 
 
+# Register these in their own function so they don't pollute the main namespace
+# Loading these here lets allows the controllers/errors to execute their hooks
+# to create the routes
+def _register_subpackages():
+    import catalog.errors
+
+
 app = create_app()
+_register_subpackages()

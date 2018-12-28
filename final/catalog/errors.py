@@ -1,13 +1,15 @@
 from flask import jsonify
 from marshmallow import fields, Schema
 
+from catalog import app
+
 
 class Error(Exception):
-    def __init__(self, status_code, error_data=None):
-        super(Error).__init__()
+    def __init__(self, status_code, error_message):
+        super(Error, self).__init__()
 
         self.status_code = status_code
-        self.error_data = error_data or {}
+        self.error_message = error_message or {}
 
     def to_response(self):
         resp = jsonify(ErrorSchema().dump(self).data)
@@ -16,9 +18,7 @@ class Error(Exception):
 
 
 class ErrorSchema(Schema):
-    error_code = fields.Int()
     error_message = fields.String()
-    error_data = fields.Raw()
 
 
 class StatusCode:
@@ -28,3 +28,18 @@ class StatusCode:
     NOT_FOUND = 404
     METHOD_NOT_ALLOWED = 405
     INTERNAL_SERVER_ERROR = 500
+
+
+@app.errorhandler(Error)
+def error_handler(e):
+    return e.to_response()
+
+
+class BadRequest(Error):
+    def __init__(self, error_message="Bad Request"):
+        super(BadRequest, self).__init__(StatusCode.BAD_REQUEST, error_message)
+
+
+class Unauthorized(Error):
+    def __init__(self, error_message="Unauthorized"):
+        super(Unauthorized, self).__init__(StatusCode.UNAUTHORIZED, error_message)
