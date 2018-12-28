@@ -43,6 +43,7 @@ def register_extensions(app):
 # Loading these here lets allows the controllers/errors to execute their hooks
 # to create the routes
 def _register_subpackages():
+    import catalog.controllers
     import catalog.errors
 
 

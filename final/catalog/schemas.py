@@ -1,4 +1,10 @@
+from flask import jsonify
 from marshmallow import Schema, fields
+
+
+class BaseSchema(Schema):
+    def jsonify(self, obj, many=False):
+        return jsonify(self.dump(obj, many).data)
 
 
 class UserSchema(Schema):
