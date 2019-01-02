@@ -1,10 +1,8 @@
-from flask_login import UserMixin
-
 from catalog.extensions import db
 from catalog.jwttoken import generate_access_token_nonce
 
 
-class User(db.Model, UserMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)

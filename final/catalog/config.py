@@ -8,4 +8,4 @@ config_name = "catalog.instance." + env
 
 module = import_module(config_name)
 
-config = module
+config = module.Config
