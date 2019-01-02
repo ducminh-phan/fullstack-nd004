@@ -1,6 +1,6 @@
+from flask import Blueprint
 from werkzeug.security import check_password_hash
 
-from catalog import app
 from catalog.errors import BadRequest
 from catalog.extensions import db
 from catalog.jwttoken import access_token_schema, encode, generate_access_token_nonce
@@ -10,6 +10,7 @@ from catalog.utils.decorators import parse_args_with
 
 INVALID_LOGIN_MESSAGE = "Invalid user login, please re-check your login credentials."
 db_session = db.session
+auth_bp = Blueprint("auth", __name__)
 
 
 def _change_user_nonce(user):
@@ -21,7 +22,7 @@ def _change_user_nonce(user):
     db_session.commit()
 
 
-@app.route("/login", methods=("POST",))
+@auth_bp.route("/login", methods=("POST",))
 @parse_args_with(UserLoginSchema())
 def login(args):
     email = args.get("email")

@@ -1,8 +1,6 @@
 from flask import jsonify
 from marshmallow import fields, Schema
 
-from catalog import app
-
 
 class Error(Exception):
     def __init__(self, status_code, error_message):
@@ -30,7 +28,6 @@ class StatusCode:
     INTERNAL_SERVER_ERROR = 500
 
 
-@app.errorhandler(Error)
 def error_handler(e):
     return e.to_response()
 
