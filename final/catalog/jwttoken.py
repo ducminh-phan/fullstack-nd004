@@ -28,5 +28,5 @@ def decode(access_token):
     return token
 
 
-def generate_access_token_nonce():
+def generate_access_token_nonce():  # pragma: no cover
     return os.urandom(4).encode("hex")

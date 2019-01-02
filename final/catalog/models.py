@@ -11,6 +11,10 @@ class User(db.Model):
         db.String(8), nullable=False, default=generate_access_token_nonce
     )
 
+    @classmethod
+    def get_by_id(cls, user_id):
+        return cls.query.filter_by(id=user_id).first()
+
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
