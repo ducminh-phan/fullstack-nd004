@@ -1,3 +1,5 @@
+import os
+
 import jwt
 from marshmallow import fields
 
@@ -13,7 +15,9 @@ access_token_schema = AccessTokenSchema()
 
 
 def encode(user):
-    return jwt.encode({"user_id": user.id}, config.JWT_SECRET)
+    return jwt.encode(
+        {"user_id": user.id, "nonce": user.access_token_nonce}, config.JWT_SECRET
+    )
 
 
 def decode(access_token):
@@ -22,3 +26,7 @@ def decode(access_token):
     except jwt.InvalidTokenError:
         return None
     return token
+
+
+def generate_access_token_nonce():
+    return os.urandom(4).encode("hex")
