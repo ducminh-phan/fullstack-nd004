@@ -4,7 +4,7 @@ import jwt
 from marshmallow import fields
 
 from catalog.config import config
-from catalog.schemas import BaseSchema
+from catalog.schemas.base import BaseSchema
 
 
 class AccessTokenSchema(BaseSchema):

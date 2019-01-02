@@ -7,7 +7,7 @@ import pytest
 
 from catalog import create_app
 from catalog.extensions import db
-from catalog.models import User
+from catalog.models.user import User
 
 if os.getenv("ENVIRONMENT") != "test":
     print('Tests should be run with "ENVIRONMENT=test"')

@@ -4,8 +4,8 @@ from werkzeug.security import check_password_hash
 from catalog.errors import BadRequest
 from catalog.extensions import db
 from catalog.jwttoken import access_token_schema, encode, generate_access_token_nonce
-from catalog.models import User
-from catalog.schemas import UserLoginSchema
+from catalog.models.user import User
+from catalog.schemas.user import UserLoginSchema
 from catalog.utils.decorators import parse_args_with
 
 INVALID_LOGIN_MESSAGE = "Invalid user login, please re-check your login credentials."
