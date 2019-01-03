@@ -1,4 +1,4 @@
-from marshmallow import fields
+from marshmallow import Schema, fields
 
 from catalog.schemas.base import JsonifySchema
 from catalog.schemas.category import CategorySchema
@@ -12,3 +12,8 @@ class ItemSchema(JsonifySchema):
 
     user = fields.Nested(UserSchema, only=["id"])
     category = fields.Nested(CategorySchema)
+
+
+class NewItemSchema(Schema):
+    name = fields.String(required=True)
+    description = fields.String(required=True)

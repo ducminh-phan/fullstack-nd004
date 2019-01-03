@@ -5,6 +5,8 @@ from flask import request
 
 from catalog import errors
 from catalog.jwttoken import decode
+from catalog.models.category import Category
+from catalog.models.item import Item
 from catalog.models.user import User
 
 AUTH_HEADER_VALUE_PREFIX = "Bearer "
@@ -53,10 +55,6 @@ def require_logged_in(f):
             raise errors.BadRequest()
 
         access_token = request.headers["Authorization"][len(AUTH_HEADER_VALUE_PREFIX) :]
-
-        if access_token is None:
-            raise errors.BadRequest("Not logged in")
-
         access_token_decoded = decode(access_token)
 
         if access_token_decoded is None:
@@ -70,6 +68,48 @@ def require_logged_in(f):
             raise errors.Unauthorized(INVALID_TOKEN_MESSAGE)
 
         kwargs["user"] = user
+
+        return f(**kwargs)
+
+    return wrapper
+
+
+def check_category_exist(f):
+    """
+    Check if the category exists from the parameter category_id,
+    and load the category into the argument `category`
+    """
+
+    @wraps(f)
+    def wrapper(**kwargs):
+        category_id = kwargs.pop("category_id", None)
+        category = Category.get_by_id(category_id)
+
+        if category is None:
+            raise errors.NotFound()
+
+        kwargs["category"] = category
+
+        return f(**kwargs)
+
+    return wrapper
+
+
+def check_item_exist(f):
+    """
+    Check if the item exists from the parameter item_id,
+    and load the item into the argument `item`
+    """
+
+    @wraps(f)
+    def wrapper(**kwargs):
+        item_id = kwargs.pop("item_id", None)
+        item = Item.get_by_id(item_id)
+
+        if item is None:
+            raise errors.NotFound()
+
+        kwargs["item"] = item
 
         return f(**kwargs)
 
