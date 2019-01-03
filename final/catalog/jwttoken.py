@@ -4,10 +4,10 @@ import jwt
 from marshmallow import fields
 
 from catalog.config import config
-from catalog.schemas.base import BaseSchema
+from catalog.schemas.base import JsonifySchema
 
 
-class AccessTokenSchema(BaseSchema):
+class AccessTokenSchema(JsonifySchema):
     access_token = fields.String()
 
 

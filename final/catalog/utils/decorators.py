@@ -19,7 +19,7 @@ def parse_args_with(schema):
 
     def parse_args_with_decorator(f):
         @wraps(f)
-        def decorated_function(*args, **kwargs):
+        def wrapper(**kwargs):
             try:
                 request_args = request.get_json() or {}
             except werkzeug.exceptions.BadRequest as e:
@@ -34,9 +34,9 @@ def parse_args_with(schema):
                 raise errors.BadRequest(args_errors)
 
             kwargs["args"] = parsed_args
-            return f(*args, **kwargs)
+            return f(**kwargs)
 
-        return decorated_function
+        return wrapper
 
     return parse_args_with_decorator
 
@@ -48,7 +48,7 @@ def require_logged_in(f):
     """
 
     @wraps(f)
-    def wrapper(*args, **kwargs):
+    def wrapper(**kwargs):
         if "Authorization" not in request.headers:
             raise errors.BadRequest()
 
@@ -71,6 +71,6 @@ def require_logged_in(f):
 
         kwargs["user"] = user
 
-        return f(*args, **kwargs)
+        return f(**kwargs)
 
     return wrapper

@@ -1,5 +1,6 @@
-from flask import jsonify
-from marshmallow import fields, Schema
+from marshmallow import fields
+
+from catalog.schemas.base import JsonifySchema
 
 
 class Error(Exception):
@@ -10,12 +11,12 @@ class Error(Exception):
         self.error_message = error_message or {}
 
     def to_response(self):
-        resp = jsonify(ErrorSchema().dump(self).data)
+        resp = ErrorSchema().jsonify(self)
         resp.status_code = self.status_code
         return resp
 
 
-class ErrorSchema(Schema):
+class ErrorSchema(JsonifySchema):
     error_message = fields.String()
 
 
