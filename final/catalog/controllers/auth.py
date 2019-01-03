@@ -1,16 +1,32 @@
 from flask import Blueprint
+from marshmallow import fields, Schema
 from werkzeug.security import check_password_hash
 
-from catalog.errors import BadRequest
+from catalog import errors
 from catalog.extensions import db
-from catalog.jwttoken import access_token_schema, encode, generate_access_token_nonce
+from catalog.jwttoken import encode, generate_access_token_nonce
 from catalog.models.user import User
+from catalog.schemas.base import JsonifySchema
 from catalog.schemas.user import UserLoginSchema
 from catalog.utils.decorators import parse_args_with
 
 INVALID_LOGIN_MESSAGE = "Invalid user login, please re-check your login credentials."
 db_session = db.session
 auth_bp = Blueprint("auth", __name__)
+
+
+class AuthResponseSchema(JsonifySchema):
+    access_token = fields.String()
+    user_id = fields.Integer()
+    username = fields.String()
+    auth_type = fields.String()
+
+
+auth_response_schema = AuthResponseSchema()
+
+
+class GoogleAuthSchema(Schema):
+    token = fields.Str(required=True, validate=lambda token: len(token) > 0)
 
 
 def _change_user_nonce(user):
@@ -32,9 +48,16 @@ def login(args):
 
     # Check if the user exists and the password is correct
     if user is None or not check_password_hash(user.password, password):
-        raise BadRequest(INVALID_LOGIN_MESSAGE)
+        raise errors.BadRequest(INVALID_LOGIN_MESSAGE)
 
     # Generate new nonce for the user to prevent replay attack
     _change_user_nonce(user)
 
-    return access_token_schema.jsonify({"access_token": encode(user)})
+    return auth_response_schema.jsonify(
+        {
+            "access_token": encode(user),
+            "user_id": user.id,
+            "username": user.username,
+            "auth_type": "email",
+        }
+    )
