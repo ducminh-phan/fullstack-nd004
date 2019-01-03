@@ -8,7 +8,6 @@ from catalog.utils.decorators import parse_args_with, require_logged_in
 category_bp = Blueprint("category", __name__, url_prefix="/categories")
 
 
-@category_bp.route("/", methods=("POST",))
 @category_bp.route("", methods=("POST",))
 @parse_args_with(NewCategorySchema())
 @require_logged_in
@@ -25,7 +24,6 @@ def new_category(args, user):
     return CategorySchema().jsonify(category), 201
 
 
-@category_bp.route("/", methods=("GET",))
 @category_bp.route("", methods=("GET",))
 def list_categories():
     categories = Category.get_all()

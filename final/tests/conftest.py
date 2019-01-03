@@ -35,6 +35,9 @@ def app():
 
 @pytest.fixture(scope="session", autouse=True)
 def client(app):
+    app_context = app.test_request_context()
+    app_context.push()
+
     return app.test_client()
 
 
@@ -42,3 +45,13 @@ def client(app):
 def user(app):
     with app.app_context():
         yield User.get_by_id(1)
+
+
+@pytest.fixture(scope="function", autouse=True)
+def user_token(app, client):
+    with app.app_context():
+        response = client.post(
+            "/login", json={"email": "zxc@gmail.com", "password": "zxcvbnm"}
+        )
+
+        yield response.json["access_token"]

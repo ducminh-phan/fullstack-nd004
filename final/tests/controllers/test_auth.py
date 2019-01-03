@@ -1,19 +1,20 @@
-def test_login(client):
-    # Invalid request
+def test_login_invalid_request(client):
     response = client.post("/login", json={})
     assert response.status_code == 400
 
     response = client.post("/login", json={"email": "zxc"})
     assert response.status_code == 400
 
-    # Invalid credentials
+
+def test_login_invalid_credentials(client):
     response = client.post("/login", json={"email": "zxc@gmail.com", "password": "zxc"})
     assert response.status_code == 400
 
     response = client.post("/login", json={"email": "zxc@gmail.com", "password": "zxc"})
     assert response.status_code == 400
 
-    # Valid credentials
+
+def test_login_valid_credentials(client):
     response = client.post(
         "/login", json={"email": "zxc@gmail.com", "password": "zxcvbnm"}
     )
