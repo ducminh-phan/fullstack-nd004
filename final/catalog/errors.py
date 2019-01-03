@@ -25,6 +25,7 @@ class StatusCode:
     FORBIDDEN = 403
     NOT_FOUND = 404
     METHOD_NOT_ALLOWED = 405
+    CONFLICT = 409
     INTERNAL_SERVER_ERROR = 500
 
 
@@ -40,3 +41,13 @@ class BadRequest(Error):
 class Unauthorized(Error):
     def __init__(self, error_message="Unauthorized"):
         super(Unauthorized, self).__init__(StatusCode.UNAUTHORIZED, error_message)
+
+
+class NotFound(Error):
+    def __init__(self, error_message="Not Found"):
+        super(NotFound, self).__init__(StatusCode.NOT_FOUND, error_message)
+
+
+class Conflict(Error):
+    def __init__(self, error_message="Conflict"):
+        super(Conflict, self).__init__(StatusCode.CONFLICT, error_message)

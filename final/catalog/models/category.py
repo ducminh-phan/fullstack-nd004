@@ -1,6 +1,8 @@
 from catalog.extensions import db
 from catalog.models.user import User
 
+db_session = db.session
+
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,3 +18,11 @@ class Category(db.Model):
     @classmethod
     def get_by_id(cls, category_id):
         return cls.query.filter_by(id=category_id).first()
+
+    @classmethod
+    def get_by_name(cls, category_name):
+        return cls.query.filter_by(name=category_name).first()
+
+    def save_to_db(self):
+        db_session.add(self)
+        db_session.commit()
