@@ -12,11 +12,13 @@ function Login() {
   }
 
   return (
-    <div>
-      <EmailLogin />
+    <div className="row">
+      <div className="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+        <EmailLogin />
 
-      <div id="extra-login">
-        <GLogin />
+        <div id="extra-login">
+          <GLogin />
+        </div>
       </div>
     </div>
   );

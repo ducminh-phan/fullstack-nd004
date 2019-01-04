@@ -1,15 +1,15 @@
 import React from 'react';
 
-import Header from './Header';
 import CategoryList from './CategoryList';
 
 
 const Main = () => (
-  <div className="main">
-    <Header />
-
-    <div>
+  <div className="row">
+    <div className="col-sm-6">
       <CategoryList />
+    </div>
+    <div className="col-sm-6">
+      Items
     </div>
   </div>
 );
