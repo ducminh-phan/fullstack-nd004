@@ -7,7 +7,7 @@ import Auth from '../../utils/auth';
 import Storage from '../../utils/storage';
 
 
-export default class Login extends Component {
+export default class EmailLogin extends Component {
   constructor(props) {
     super(props);
 
@@ -67,6 +67,7 @@ export default class Login extends Component {
           </FormGroup>
           <Button
             block
+            bsStyle="primary"
             bsSize="large"
             disabled={!this.validateForm()}
             type="submit"

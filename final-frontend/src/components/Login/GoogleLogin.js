@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
+import { Redirect } from 'react-router-dom';
+
 import request from '../../utils/request';
 import { showMessage } from '../../utils/toastr';
 import config from '../../config';
+import Storage from '../../utils/storage';
+import Auth from '../../utils/auth';
 
 
 export default class GLogin extends Component {
   constructor(props) {
     super(props);
-    this.state = { isAuthenticated: false, token: '', user: null };
+
+    this.state = {
+      isAuthenticated: Auth.isAuthenticated(),
+    };
   }
 
   googleLoginSuccess = (response) => {
     console.log(response);
 
     const data = {
-      access_token: response.accessToken,
-      token_id: response.tokenId,
+      code: response.code,
     };
+
     this.loginByGoogle(data);
   };
 
@@ -26,17 +33,23 @@ export default class GLogin extends Component {
   };
 
   loginByGoogle = (data) => {
-    request.post('/login/google', data).then((response) => {
-      console.log(response);
+    request.post('/login/google', data)
+      .then((response) => {
+        console.log(response);
 
-      this.setState({ isAuthenticated: true, token: response.access_token });
-    }).catch((err) => {
-      console.log(err);
-      showMessage('error', 'Error', err.data.error_message);
-    });
+        Storage.setToken(response.data);
+        this.setState({ isAuthenticated: true });
+      })
+      .catch((error) => {
+        showMessage('error', 'Error', error.response.data.error_message);
+      });
   };
 
   render() {
+    if (this.state.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div>
         <GoogleLogin

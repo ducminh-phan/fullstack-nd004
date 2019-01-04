@@ -1,43 +1,18 @@
-import React, { Component } from 'react';
-import Login from './components/login/Login';
-import GLogin from './components/login/GoogleLogin';
-import Auth from './utils/auth';
-import Storage from './utils/storage';
+import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
-class App extends Component {
-  logout = () => {
-    Storage.clear();
-    this.forceUpdate();
-  };
+import Main from './components/Main';
+import Login from './components/Login';
 
-  render() {
-    const content = Auth.isAuthenticated()
-      ? (
-        <div>
-          <p>Authenticated</p>
-          <div>
-            {Storage.getUser().username}
-          </div>
-          <div>
-            <button type="button" onClick={this.logout} className="button">
-              Log out
-            </button>
-          </div>
-        </div>
-      )
-      : (
-        <div>
-          <Login />
-          <GLogin />
-        </div>
-      );
 
-    return (
-      <div className="App">
-        {content}
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="App container">
+    <Switch>
+      <Route exact path="/" component={Main} />
+      <Route path="/login" component={Login} />
+      <Redirect to="/" />
+    </Switch>
+  </div>
+);
 
 export default App;

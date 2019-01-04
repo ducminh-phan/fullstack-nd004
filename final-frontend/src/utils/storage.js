@@ -46,6 +46,14 @@ class Storage {
     return JSON.parse(localStorage.getItem(STORAGE_USER_KEY));
   }
 
+  static getUserID() {
+    return Storage.getUser() && Storage.getUser().user_id;
+  }
+
+  static getUserName() {
+    return Storage.getUser() && Storage.getUser().username;
+  }
+
   static info() {
     return [Storage.getAccessToken(), Storage.getUser()];
   }
