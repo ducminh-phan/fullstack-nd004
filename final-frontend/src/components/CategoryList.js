@@ -1,75 +1,55 @@
-import React, { Component } from 'react';
-import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
+import React from 'react';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { request } from '../utils/request';
 import Auth from '../utils/auth';
-import Storage from '../utils/storage';
 
 
-class CategoryList extends Component {
-  state = {
-    categories: [],
-  };
+const CategoryList = (props) => {
+  const { categories } = props;
 
-  componentDidMount() {
-    this.getCategories();
-  }
+  return (
+    <div id="category">
+      {Auth.isAuthenticated()
+        ? (
+          <div id="category-list-top">
+            <Link to="/new-category" className="btn btn-default">
+              Add Category
+            </Link>
+          </div>
+        )
+        : null}
 
-  getCategories = () => {
-    request.get('/categories')
-      .then((response) => {
-        this.setState(
-          {
-            categories: response.data,
-          },
-        );
-      });
-  };
-
-  render() {
-    const { categories } = this.state;
-
-    return (
-      <div id="category">
-        {Auth.isAuthenticated()
-          ? (
-            <div id="category-list-top">
-              <Link to="/create" className="btn btn-default">
-                Add Category
-              </Link>
-            </div>
-          )
-          : null}
-
-        <div id="category-content" className="vertical-pad">
-          <ListGroup id="category-list">
-            {categories.map(category => (
-              <ListGroupItem key={category.id} className="contact-list-item">
-                <div className="clearfix">
-                  {category.name}
-                  {Storage.getUserID() === category.user.id
-                    ? (
-                      <span className="pull-right">
-                        <Button
-                          // onClick={() => onDeleteContact(category)}
-                          bsStyle="danger"
-                          bsSize="xs"
-                          className="contact-remove"
-                        >
-                          <Glyphicon glyph="remove" />
-                        </Button>
-                      </span>
-                    )
-                    : null}
-                </div>
-              </ListGroupItem>
-            ))}
-          </ListGroup>
-        </div>
+      <div id="category-content" className="vertical-pad">
+        <ListGroup id="category-list">
+          {categories.map(category => (
+            <ListGroupItem
+              key={category.id}
+              className="contact-list-item"
+              onClick={props.handleSelectCategory}
+              category-id={category.id}
+              disabled={props.selectedCategoryID === category.id}
+            >
+              <div className="clearfix">
+                {category.name}
+              </div>
+            </ListGroupItem>
+          ))}
+        </ListGroup>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+CategoryList.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedCategoryID: PropTypes.number,
+  handleSelectCategory: PropTypes.func.isRequired,
+};
+
+CategoryList.defaultProps = {
+  selectedCategoryID: 0,
+};
 
 export default CategoryList;

@@ -15,7 +15,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Main} />
         <Route path="/login" component={Login} />
-        <Route path="/create" component={NewCategory} />
+        <Route path="/new-category" component={NewCategory} />
         <Redirect to="/" />
       </Switch>
     </div>
