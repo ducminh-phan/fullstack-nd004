@@ -4,25 +4,26 @@ import React from 'react';
 import EmailLogin from './EmailLogin';
 import GLogin from './GoogleLogin';
 import Auth from '../../utils/auth';
+import formWrapper from '../../utils/wrappers/formWrapper';
 
 
-function Login() {
+function LoginForm() {
   if (Auth.isAuthenticated()) {
     return <Redirect to="/" />;
   }
 
   return (
-    <div className="row">
-      <div className="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-        <EmailLogin />
+    <React.Fragment>
+      <EmailLogin />
 
-        <div id="extra-login">
-          <GLogin />
-        </div>
+      <div id="extra-login">
+        <GLogin />
       </div>
-    </div>
+    </React.Fragment>
   );
 }
+
+const Login = formWrapper(LoginForm);
 
 
 export default Login;
