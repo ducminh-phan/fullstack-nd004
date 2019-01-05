@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import request from '../../utils/request';
-import { showMessage } from '../../utils/toastr';
+import { request } from '../../utils/request';
 import config from '../../config';
 import Storage from '../../utils/storage';
 import Auth from '../../utils/auth';
 
 
 export default class GLogin extends Component {
+  static propTypes = {
+    changeStatus: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -19,8 +23,6 @@ export default class GLogin extends Component {
   }
 
   googleLoginSuccess = (response) => {
-    console.log(response);
-
     const data = {
       code: response.code,
     };
@@ -29,19 +31,17 @@ export default class GLogin extends Component {
   };
 
   googleLoginFailure = (response) => {
-    showMessage('error', 'Error', response.error);
+    this.props.changeStatus(false, response.error);
   };
 
   loginByGoogle = (data) => {
     request.post('/login/google', data)
       .then((response) => {
-        console.log(response);
-
         Storage.setToken(response.data);
         this.setState({ isAuthenticated: true });
       })
       .catch((error) => {
-        showMessage('error', 'Error', error.response.data.error_message);
+        this.props.changeStatus(false, error.response.data.error_message);
       });
   };
 

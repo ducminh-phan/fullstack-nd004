@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 import formWrapper from '../utils/wrappers/formWrapper';
 import { authRequest } from '../utils/request';
 
 
 class NewCategoryBody extends Component {
+  static propTypes = {
+    changeStatus: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -25,8 +30,10 @@ class NewCategoryBody extends Component {
 
     authRequest.post('/categories', {
       name: this.state.name,
-    }).then((response) => {
-      console.log(response.data);
+    }).then(() => {
+      this.props.changeStatus(true, 'Added successfully');
+    }).catch((error) => {
+      this.props.changeStatus(false, error.response.data.error_message);
     });
   };
 

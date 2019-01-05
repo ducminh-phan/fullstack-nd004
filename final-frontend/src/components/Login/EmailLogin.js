@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import request from '../../utils/request';
+import { request } from '../../utils/request';
 import Auth from '../../utils/auth';
 import Storage from '../../utils/storage';
 
 
 export default class EmailLogin extends Component {
+  static propTypes = {
+    changeStatus: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -33,6 +38,8 @@ export default class EmailLogin extends Component {
     }).then((response) => {
       Storage.setToken(response.data);
       this.setState({ isAuthenticated: true });
+    }).catch((error) => {
+      this.props.changeStatus(false, error.response.data.error_message);
     });
   };
 
