@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import request from '../utils/request';
+import { request } from '../utils/request';
+import Auth from '../utils/auth';
 import Storage from '../utils/storage';
 
 
@@ -31,11 +32,15 @@ class CategoryList extends Component {
 
     return (
       <div id="category">
-        <div id="category-list-top">
-          <Link to="/create" className="btn btn-default">
-            Add Category
-          </Link>
-        </div>
+        {Auth.isAuthenticated()
+          ? (
+            <div id="category-list-top">
+              <Link to="/create" className="btn btn-default">
+                Add Category
+              </Link>
+            </div>
+          )
+          : null}
 
         <div id="category-content" className="vertical-pad">
           <ListGroup id="category-list">

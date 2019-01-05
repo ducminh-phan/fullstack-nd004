@@ -2,8 +2,9 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Main from './components/Main';
-import Login from './components/Login';
 import Header from './components/Header';
+import Login from './components/Login';
+import NewCategory from './components/NewCategory';
 
 
 const App = () => (
@@ -14,6 +15,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Main} />
         <Route path="/login" component={Login} />
+        <Route path="/create" component={NewCategory} />
         <Redirect to="/" />
       </Switch>
     </div>
