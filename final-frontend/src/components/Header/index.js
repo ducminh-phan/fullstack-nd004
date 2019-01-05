@@ -6,7 +6,7 @@ import UserAuth from './UserAuth';
 
 
 const Header = () => (
-  <Navbar>
+  <Navbar fluid>
     <Navbar.Header>
       <Navbar.Brand>
         <Link to="/">

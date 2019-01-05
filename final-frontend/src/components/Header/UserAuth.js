@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { NavItem } from 'react-bootstrap';
+import { Navbar, NavItem } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
+
 
 import Auth from '../../utils/auth';
 import Storage from '../../utils/storage';
@@ -16,9 +18,9 @@ class UserAuth extends Component {
     if (Auth.isAuthenticated()) {
       return (
         <React.Fragment>
-          <NavItem id="username" disabled>
+          <Navbar.Text id="username">
             {Storage.getUserName()}
-          </NavItem>
+          </Navbar.Text>
           <NavItem onClick={this.logout}>
             Log out
           </NavItem>
@@ -27,9 +29,11 @@ class UserAuth extends Component {
     }
 
     return (
-      <NavItem href="/login">
-        Log In
-      </NavItem>
+      <LinkContainer to="/login">
+        <NavItem>
+          Log In
+        </NavItem>
+      </LinkContainer>
     );
   }
 }

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
+import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import {
-  Button, Glyphicon, ListGroup, ListGroupItem,
-} from 'react-bootstrap';
 
 import request from '../utils/request';
 import Storage from '../utils/storage';
@@ -13,7 +11,7 @@ class CategoryList extends Component {
     categories: [],
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.getCategories();
   }
 
@@ -34,14 +32,12 @@ class CategoryList extends Component {
     return (
       <div id="category">
         <div id="category-list-top">
-          <Button>
-            <Link to="/create" id="add-category">
-              Add Category
-            </Link>
-          </Button>
+          <Link to="/create" className="btn btn-default">
+            Add Category
+          </Link>
         </div>
 
-        <div id="category-content">
+        <div id="category-content" className="vertical-pad">
           <ListGroup id="category-list">
             {categories.map(category => (
               <ListGroupItem key={category.id} className="contact-list-item">
@@ -52,8 +48,8 @@ class CategoryList extends Component {
                       <span className="pull-right">
                         <Button
                           // onClick={() => onDeleteContact(category)}
-                          pullRight
-                          bsStyle="xs"
+                          bsStyle="danger"
+                          bsSize="xs"
                           className="contact-remove"
                         >
                           <Glyphicon glyph="remove" />

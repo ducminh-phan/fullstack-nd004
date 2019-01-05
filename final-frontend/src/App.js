@@ -7,10 +7,10 @@ import Header from './components/Header';
 
 
 const App = () => (
-  <div className="App">
+  <div className="App container">
     <Header />
 
-    <div className="container">
+    <div>
       <Switch>
         <Route exact path="/" component={Main} />
         <Route path="/login" component={Login} />

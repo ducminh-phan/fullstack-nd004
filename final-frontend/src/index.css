@@ -20,6 +20,11 @@ code {
     padding-bottom: 5px;
 }
 
+.vertical-pad {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 #extra-login {
     padding-top: 25px;
 }
