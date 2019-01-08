@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Category from './Category';
-import ItemList from './ItemList';
+import Item from './Item';
 
 
 class Main extends Component {
@@ -20,7 +20,7 @@ class Main extends Component {
           <Category />
         </div>
         <div className="col-sm-6">
-          <ItemList items={[]} />
+          <Item />
         </div>
       </div>
     );

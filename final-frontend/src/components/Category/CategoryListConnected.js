@@ -6,7 +6,7 @@ import CategoryList from './CategoryList';
 
 const mapStateToProps = ({ categories, category }) => ({
   categories,
-  selectedCategoryID: category ? category.selectedCategoryID : 0,
+  selectedCategoryID: category.selectedCategoryID,
 });
 
 
