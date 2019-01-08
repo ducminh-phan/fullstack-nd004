@@ -42,8 +42,8 @@ class Storage {
 
   static setUserFromResponse(authResponse) {
     const user = {
-      user_id: authResponse.user_id,
-      username: authResponse.username,
+      user: authResponse.user_id,
+      name: authResponse.username,
     };
 
     Storage.setUser(user);
@@ -58,11 +58,11 @@ class Storage {
   }
 
   static getUserID() {
-    return Storage.getUser() && Storage.getUser().user_id;
+    return Storage.getUser() && Storage.getUser().id;
   }
 
   static getUserName() {
-    return Storage.getUser() && Storage.getUser().username;
+    return Storage.getUser() && Storage.getUser().name;
   }
 
   static info() {

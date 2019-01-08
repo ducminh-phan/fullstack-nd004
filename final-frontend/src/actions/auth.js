@@ -28,8 +28,8 @@ function handleLoginSuccess(response, dispatch) {
     loginSuccess(
       response.data.access_token,
       {
-        user_id: response.data.user_id,
-        username: response.data.username,
+        id: response.data.user_id,
+        name: response.data.username,
       },
     ),
   );

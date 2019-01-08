@@ -7,7 +7,7 @@ import checkLoggedIn from '../../utils/auth';
 
 const mapStateToProps = ({ auth }) => ({
   isLoggedIn: checkLoggedIn(auth),
-  username: auth.user ? auth.user.username : '',
+  username: auth.user ? auth.user.name : '',
 });
 
 
