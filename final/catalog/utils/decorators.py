@@ -74,6 +74,25 @@ def require_logged_in(f):
     return wrapper
 
 
+def require_owner(f):
+    """Make sure the user is the owner of the item"""
+
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        user = kwargs.get("user")
+        item = kwargs.get("item")
+
+        if not (user and item):
+            raise errors.BadRequest()
+
+        if user.id != item.user.id:
+            raise errors.Forbidden()
+
+        return f(*args, **kwargs)
+
+    return wrapper
+
+
 def check_category_exist(f):
     """
     Check if the category exists from the parameter category_id,

@@ -5,4 +5,4 @@ INSERT INTO catalog_test.category (id, name, user_id) VALUES (2, 'Cat 2', 2);
 INSERT INTO catalog_test.category (id, name, user_id) VALUES (3, 'Cat 3', 1);
 INSERT INTO catalog_test.item (id, name, description, user_id, category_id) VALUES (1, 'Item 1', 'Lorem ipsum', 1, 1);
 INSERT INTO catalog_test.item (id, name, description, user_id, category_id) VALUES (2, 'Item 2', 'Lorem ipsum', 1, 3);
-INSERT INTO catalog_test.item (id, name, description, user_id, category_id) VALUES (3, 'Item 3', 'Lorem ipsum', 1, 1);
+INSERT INTO catalog_test.item (id, name, description, user_id, category_id) VALUES (3, 'Item 3', 'Lorem ipsum', 2, 1);

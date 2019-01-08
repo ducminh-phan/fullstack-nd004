@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 
 from catalog import errors
 from catalog.models.item import Item
@@ -6,6 +6,7 @@ from catalog.schemas.item import ItemSchema, NewItemSchema
 from catalog.utils.decorators import (
     parse_args_with,
     require_logged_in,
+    require_owner,
     check_category_exist,
     check_item_exist,
 )
@@ -48,3 +49,16 @@ def get_item(category, item):
         raise errors.BadRequest()
 
     return ItemSchema().jsonify(item)
+
+
+@item_bp.route("/<int:item_id>", methods=("DELETE",))
+@check_category_exist
+@check_item_exist
+@require_logged_in
+@require_owner
+def delete_item(category, item, user):
+    # The category of the item should match the given category
+    if item.category != category:
+        raise errors.BadRequest()
+
+    return jsonify({}), 204

@@ -73,7 +73,7 @@ class TestListItems:
             assert not response.json
 
 
-class TestGetCategory:
+class TestGetItem:
     def test_get_item_invalid_endpoint(self, client):
         for cid in [1, 9]:
             for iid in [1, 9]:
@@ -104,3 +104,43 @@ class TestGetCategory:
             url_for(endpoint="item.get_item", category_id=3, item_id=2)
         )
         assert response.status_code == 200
+
+
+class TestDeleteItem:
+    def test_delete_item_invalid_endpoint(self, client):
+        for cid in [1, 9]:
+            for iid in [1, 9]:
+                if cid != 1 or iid != 1:
+                    response = client.delete(
+                        url_for(
+                            endpoint="item.delete_item", category_id=cid, item_id=iid
+                        )
+                    )
+                    assert response.status_code == 404
+
+    def test_delete_item_invalid_pair(self, client, user_token):
+        response = client.delete(
+            url_for(endpoint="item.delete_item", category_id=1, item_id=2),
+            headers={"Authorization": "Bearer {}".format(user_token)},
+        )
+        assert response.status_code == 400
+
+        response = client.delete(
+            url_for(endpoint="item.delete_item", category_id=2, item_id=1),
+            headers={"Authorization": "Bearer {}".format(user_token)},
+        )
+        assert response.status_code == 400
+
+    def test_delete_item_invalid_user(self, client, user_token):
+        response = client.delete(
+            url_for(endpoint="item.delete_item", category_id=1, item_id=3),
+            headers={"Authorization": "Bearer {}".format(user_token)},
+        )
+        assert response.status_code == 403
+
+    def test_delete_item(self, client, user_token):
+        response = client.delete(
+            url_for(endpoint="item.delete_item", category_id=1, item_id=1),
+            headers={"Authorization": "Bearer {}".format(user_token)},
+        )
+        assert response.status_code == 204
