@@ -21,21 +21,32 @@ class Storage {
 
     Storage.clear();
 
-    Storage.setAccessToken(authResponse);
-    Storage.setUser(authResponse);
+    Storage.setAccessTokenFromResponse(authResponse);
+    Storage.setUserFromResponse(authResponse);
 
     return true;
   }
 
-  static setAccessToken(authResponse) {
-    localStorage.setItem(STORAGE_TOKEN_KEY, authResponse.access_token);
+  static setAccessToken(token) {
+    const tokenString = token || '';
+    localStorage.setItem(STORAGE_TOKEN_KEY, tokenString);
   }
 
-  static setUser(authResponse) {
-    localStorage.setItem(STORAGE_USER_KEY, JSON.stringify({
+  static setAccessTokenFromResponse(authResponse) {
+    Storage.setAccessToken(authResponse.access_token);
+  }
+
+  static setUser(user) {
+    localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(user));
+  }
+
+  static setUserFromResponse(authResponse) {
+    const user = {
       user_id: authResponse.user_id,
       username: authResponse.username,
-    }));
+    };
+
+    Storage.setUser(user);
   }
 
   static getAccessToken() {
@@ -60,3 +71,4 @@ class Storage {
 }
 
 export default Storage;
+export { STORAGE_TOKEN_KEY, STORAGE_USER_KEY };

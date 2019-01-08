@@ -1,12 +1,5 @@
-import Storage from './storage';
-
-class Auth {
-  static isAuthenticated() {
-    const token = Storage.getAccessToken();
-    const user = Storage.getUser();
-
-    return !!(token && user);
-  }
+function checkLoggedIn(auth) {
+  return !!(auth.token && auth.user);
 }
 
-export default Auth;
+export default checkLoggedIn;

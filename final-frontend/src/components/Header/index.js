@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
 import React from 'react';
 
-import UserAuth from './UserAuth';
+import UserAuth from '../../containers/Header/UserAuth';
 
+
+const UserAuthWithRouter = withRouter(UserAuth);
 
 const Header = () => (
   <Navbar fluid>
@@ -15,7 +17,7 @@ const Header = () => (
       </Navbar.Brand>
     </Navbar.Header>
     <Nav pullRight>
-      <UserAuth />
+      <UserAuthWithRouter />
     </Nav>
   </Navbar>
 );

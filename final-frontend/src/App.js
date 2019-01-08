@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Main from './components/Main';
 import Header from './components/Header';
-import Login from './components/Login';
+import Login from './containers/Login';
 import NewCategory from './components/NewCategory';
 
 

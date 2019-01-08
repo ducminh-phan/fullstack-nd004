@@ -2,35 +2,31 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import EmailLogin from './EmailLogin';
-import GLogin from './GoogleLogin';
-import Auth from '../../utils/auth';
-import formWrapper from '../../utils/wrappers/formWrapper';
+import EmailLogin from '../../containers/Login/EmailLogin';
+import GLogin from '../../containers/Login/GoogleLogin';
 
 
 class LoginForm extends Component {
   static propTypes = {
-    changeStatus: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
   };
 
   render() {
-    if (Auth.isAuthenticated()) {
+    if (this.props.isLoggedIn) {
       return <Redirect to="/" />;
     }
 
     return (
       <React.Fragment>
-        <EmailLogin changeStatus={this.props.changeStatus} />
+        <EmailLogin />
 
         <div id="extra-login">
-          <GLogin changeStatus={this.props.changeStatus} />
+          <GLogin />
         </div>
       </React.Fragment>
     );
   }
 }
 
-const Login = formWrapper(LoginForm);
 
-
-export default Login;
+export default LoginForm;
