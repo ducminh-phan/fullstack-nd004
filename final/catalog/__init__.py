@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask_cors import CORS
 
 from catalog.config import config
 
@@ -8,6 +9,8 @@ from catalog.config import config
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config)
+
+    CORS(app)
 
     # ensure the instance folder exists
     try:

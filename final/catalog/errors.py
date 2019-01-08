@@ -4,11 +4,11 @@ from catalog.schemas.base import JsonifySchema
 
 
 class Error(Exception):
-    def __init__(self, status_code, error_message):
+    def __init__(self, status_code, message):
         super(Error, self).__init__()
 
         self.status_code = status_code
-        self.error_message = error_message or {}
+        self.message = message or {}
 
     def to_response(self):
         resp = ErrorSchema().jsonify(self)
@@ -17,7 +17,7 @@ class Error(Exception):
 
 
 class ErrorSchema(JsonifySchema):
-    error_message = fields.String()
+    message = fields.String()
 
 
 class StatusCode:
@@ -35,20 +35,25 @@ def error_handler(e):
 
 
 class BadRequest(Error):
-    def __init__(self, error_message="Bad Request"):
-        super(BadRequest, self).__init__(StatusCode.BAD_REQUEST, error_message)
+    def __init__(self, message="Bad Request"):
+        super(BadRequest, self).__init__(StatusCode.BAD_REQUEST, message)
 
 
 class Unauthorized(Error):
-    def __init__(self, error_message="Unauthorized"):
-        super(Unauthorized, self).__init__(StatusCode.UNAUTHORIZED, error_message)
+    def __init__(self, message="Unauthorized"):
+        super(Unauthorized, self).__init__(StatusCode.UNAUTHORIZED, message)
+
+
+class Forbidden(Error):
+    def __init__(self, message="Forbidden"):
+        super(Forbidden, self).__init__(StatusCode.FORBIDDEN, message)
 
 
 class NotFound(Error):
-    def __init__(self, error_message="Not Found"):
-        super(NotFound, self).__init__(StatusCode.NOT_FOUND, error_message)
+    def __init__(self, message="Not Found"):
+        super(NotFound, self).__init__(StatusCode.NOT_FOUND, message)
 
 
 class Conflict(Error):
-    def __init__(self, error_message="Conflict"):
-        super(Conflict, self).__init__(StatusCode.CONFLICT, error_message)
+    def __init__(self, message="Conflict"):
+        super(Conflict, self).__init__(StatusCode.CONFLICT, message)
