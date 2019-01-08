@@ -1,67 +1,26 @@
 import React, { Component } from 'react';
-
-import { request } from '../utils/request';
-import CategoryList from './CategoryList';
+import PropTypes from 'prop-types';
+import Category from './Category';
 import ItemList from './ItemList';
 
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      categories: [],
-      items: [],
-      selectedCategoryID: 0,
-    };
-  }
+  static propTypes = {
+    getCategories: PropTypes.func.isRequired,
+  };
 
   componentDidMount() {
-    this.getCategories();
+    this.props.getCategories();
   }
-
-  getCategories = () => {
-    request.get('/categories')
-      .then((response) => {
-        this.setState(
-          {
-            categories: response.data,
-          },
-        );
-      });
-  };
-
-  getItems = (categoryID) => {
-    request.get(`/categories/${categoryID}/items`)
-      .then((response) => {
-        this.setState(
-          {
-            items: response.data,
-          },
-        );
-      });
-  };
-
-  selectCategory = (event) => {
-    const categoryID = parseInt(event.currentTarget.getAttribute('category-id'), 10);
-    this.setState({
-      selectedCategoryID: categoryID,
-    });
-    this.getItems(categoryID);
-  };
 
   render() {
     return (
       <div className="row">
         <div className="col-sm-6">
-          <CategoryList
-            categories={this.state.categories}
-            selectedCategoryID={this.state.selectedCategoryID}
-            handleSelectCategory={this.selectCategory}
-          />
+          <Category />
         </div>
         <div className="col-sm-6">
-          <ItemList items={this.state.items} />
+          <ItemList items={[]} />
         </div>
       </div>
     );
