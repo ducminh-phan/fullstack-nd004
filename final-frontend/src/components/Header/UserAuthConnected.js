@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import UserAuth from '../../components/Header/UserAuth';
+import UserAuth from './UserAuth';
 import { logout } from '../../actions/auth';
 import checkLoggedIn from '../../utils/auth';
 

@@ -2,10 +2,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
 import React from 'react';
 
-import UserAuth from '../../containers/Header/UserAuth';
+import UserAuth from './UserAuthConnected';
 
 
 const UserAuthWithRouter = withRouter(UserAuth);
+
 
 const Header = () => (
   <Navbar fluid>

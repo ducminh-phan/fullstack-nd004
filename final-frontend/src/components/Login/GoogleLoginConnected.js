@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { googleLogin } from '../../actions/auth';
-import GLogin from '../../components/Login/GoogleLogin';
+import GLogin from './GoogleLogin';
 
 
 const mapDispatchToProps = dispatch => ({

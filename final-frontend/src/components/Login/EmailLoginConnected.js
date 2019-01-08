@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { emailLogin } from '../../actions/auth';
-import EmailLogin from '../../components/Login/EmailLogin';
+import EmailLogin from './EmailLogin';
 
 
 const mapDispatchToProps = dispatch => ({

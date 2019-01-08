@@ -1,32 +1,48 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import EmailLogin from '../../containers/Login/EmailLogin';
-import GLogin from '../../containers/Login/GoogleLogin';
+
+import formWrapper from '../../utils/wrappers/formWrapper';
+import checkLoggedIn from '../../utils/auth';
+import EmailLogin from './EmailLoginConnected';
+import GLogin from './GoogleLoginConnected';
 
 
-class LoginForm extends Component {
-  static propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-  };
-
-  render() {
-    if (this.props.isLoggedIn) {
-      return <Redirect to="/" />;
-    }
-
-    return (
-      <React.Fragment>
-        <EmailLogin />
-
-        <div id="extra-login">
-          <GLogin />
-        </div>
-      </React.Fragment>
-    );
+const LoginForm = (props) => {
+  if (props.isLoggedIn) {
+    return <Redirect to="/" />;
   }
-}
+
+  return (
+    <React.Fragment>
+      <EmailLogin />
+
+      <div id="extra-login">
+        <GLogin />
+      </div>
+    </React.Fragment>
+  );
+};
 
 
-export default LoginForm;
+LoginForm.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+};
+
+
+const mapStateToProps = ({ auth }) => ({
+  isLoggedIn: checkLoggedIn(auth),
+});
+
+
+const LoginContainer = connect(
+  mapStateToProps,
+)(LoginForm);
+
+
+const Login = formWrapper(LoginContainer);
+
+
+export default Login;
