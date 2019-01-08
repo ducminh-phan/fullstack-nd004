@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -45,7 +45,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(
+// https://stackoverflow.com/questions/45056150/react-router-v4-not-working-with-redux
+export default withRouter(connect(
   null,
   mapDispatchToProps,
-)(App);
+)(App));
