@@ -9,6 +9,7 @@ import Flash from './components/Flash';
 import Login from './components/Login';
 import NewCategory from './components/NewCategory';
 import NewItem from './components/NewItem';
+import Item from './components/Item';
 import { getCategories } from './actions/categories';
 
 
@@ -34,6 +35,7 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/new-category" component={NewCategory} />
             <Route path="/new-item" component={NewItem} />
+            <Route path="/categories/:categoryId/items/:itemId" component={Item} />
             <Redirect to="/" />
           </Switch>
         </div>

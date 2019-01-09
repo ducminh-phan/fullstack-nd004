@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 
@@ -22,7 +23,9 @@ class ItemListBody extends Component {
               className="contact-list-item"
             >
               <div className="clearfix">
-                {item.name}
+                <Link to={`/categories/${this.props.selectedCategoryID}/items/${item.id}`}>
+                  {item.name}
+                </Link>
                 {this.props.userId === item.user.id
                   ? (
                     <span className="pull-right">
