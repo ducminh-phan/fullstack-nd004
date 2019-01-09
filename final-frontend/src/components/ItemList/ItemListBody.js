@@ -2,13 +2,31 @@ import React, { Component } from 'react';
 import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
 
 class ItemListBody extends Component {
-  handleDeleteItem = (event) => {
-    const itemID = parseInt(event.currentTarget.getAttribute('item-id'), 10);
+  componentDidMount() {
+    const { categoryId } = this.props.match.params;
+    this.props.getItems(categoryId);
+  }
 
-    this.props.deleteItem(this.props.selectedCategoryID, itemID);
+  componentDidUpdate(prevProps) {
+    // Check if the categoryId in the URL has changed, so that we can get items if necessary
+    const prevCategoryId = prevProps.match.params.categoryId;
+    const nextCategoryId = this.props.match.params.categoryId;
+
+    if (prevCategoryId !== nextCategoryId) {
+      // The categoryId from URL has changed, we need to get new items
+      this.props.getItems(nextCategoryId);
+    }
+  }
+
+  handleDeleteItem = (event) => {
+    const itemId = parseInt(event.currentTarget.getAttribute('item-id'), 10);
+    const item = this.props.items.filter(it => (it.id === itemId))[0];
+
+    this.props.deleteItem(item.category.id, itemId);
   };
 
   render() {
@@ -23,7 +41,7 @@ class ItemListBody extends Component {
               className="contact-list-item"
             >
               <div className="clearfix">
-                <Link to={`/categories/${this.props.selectedCategoryID}/items/${item.id}`}>
+                <Link to={`/categories/${item.category.id}/items/${item.id}`}>
                   {item.name}
                 </Link>
                 {this.props.userId === item.user.id
@@ -53,9 +71,10 @@ class ItemListBody extends Component {
 
 ItemListBody.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectedCategoryID: PropTypes.number.isRequired,
   userId: PropTypes.number.isRequired,
+  getItems: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
 };
 
 

@@ -1,21 +1,13 @@
 import { connect } from 'react-redux';
-
-import { selectCategory } from '../../actions/category';
+import { withRouter } from 'react-router-dom';
 import CategoryListBody from './CategoryListBody';
 
 
-const mapStateToProps = ({ categories, category }) => ({
+const mapStateToProps = ({ categories }) => ({
   categories,
-  selectedCategoryID: category.selectedCategoryID,
 });
 
 
-const mapDispatchToProps = dispatch => ({
-  selectCategory: categoryId => dispatch(selectCategory(categoryId)),
-});
-
-
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps,
-)(CategoryListBody);
+)(CategoryListBody));

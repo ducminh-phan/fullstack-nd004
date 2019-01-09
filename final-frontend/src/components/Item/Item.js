@@ -44,9 +44,9 @@ Item.propTypes = {
   item: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
-    category: {
+    category: PropTypes.shape({
       name: PropTypes.string,
-    },
+    }),
   }),
   match: ReactRouterPropTypes.match.isRequired,
 };

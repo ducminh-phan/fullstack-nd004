@@ -39,10 +39,12 @@ def register_blueprints(app):
     from catalog.controllers.auth import auth_bp
     from catalog.controllers.category import category_bp
     from catalog.controllers.item import item_bp
+    from catalog.controllers.items import items_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(category_bp)
     app.register_blueprint(item_bp)
+    app.register_blueprint(items_bp)
 
 
 def register_error_handler(app):

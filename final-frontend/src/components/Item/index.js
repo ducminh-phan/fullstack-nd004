@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { getItem } from '../../actions/item';
 import Item from './Item';
 
 
-const mapStateToProps = (state) => ({ item: state.item });
+const mapStateToProps = state => ({ item: state.item });
 
 
 const mapDispatchToProps = dispatch => ({
@@ -12,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Item);
+)(Item));

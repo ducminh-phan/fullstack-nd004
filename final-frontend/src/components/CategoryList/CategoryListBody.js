@@ -1,45 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
 
-class CategoryListBody extends Component {
-  handleSelectCategory = (event) => {
-    const categoryID = parseInt(event.currentTarget.getAttribute('category-id'), 10);
+const CategoryListBody = (props) => {
+  const { categories } = props;
+  const { categoryId } = props.match.params;
 
-    this.props.selectCategory(categoryID);
-  };
-
-  render() {
-    const { categories } = this.props;
-
-    return (
-      <div id="category-content" className="vertical-pad">
-        <ListGroup id="category-list">
-          {categories.map(category => (
-            <ListGroupItem
-              key={category.id}
-              className="contact-list-item"
-              onClick={this.handleSelectCategory}
-              category-id={category.id}
-              disabled={this.props.selectedCategoryID === category.id}
+  return (
+    <div id="category-content" className="vertical-pad">
+      <ListGroup id="category-list">
+        {categories.map(category => (
+          <ListGroupItem
+            key={category.id}
+            className="contact-list-item"
+            disabled={categoryId === category.id.toString()}
+          >
+            <Link
+              to={`/categories/${category.id}`}
             >
-              <div className="clearfix">
-                {category.name}
-              </div>
-            </ListGroupItem>
-          ))}
-        </ListGroup>
-      </div>
-    );
-  }
-}
+              {category.name}
+            </Link>
+          </ListGroupItem>
+        ))}
+      </ListGroup>
+    </div>
+  );
+};
 
 
 CategoryListBody.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectCategory: PropTypes.func.isRequired,
-  selectedCategoryID: PropTypes.number.isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
 };
 
 
