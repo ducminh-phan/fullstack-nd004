@@ -30,6 +30,10 @@ class Item(db.Model):
     def get_by_name(cls, category_id, item_name):
         return cls.query.filter_by(category_id=category_id, name=item_name).first()
 
+    @classmethod
+    def get_latests(cls):
+        return cls.query.order_by(cls.id.desc()).limit(5).all()
+
     def save_to_db(self):
         db_session.add(self)
         db_session.commit()

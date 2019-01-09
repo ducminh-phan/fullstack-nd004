@@ -20,7 +20,7 @@ export const showAlert = (type, message) => (dispatch) => {
 
 
 export const showError = error => (dispatch) => {
-  const { message } = error.response.data;
+  const { message } = error.response && error.response.data ? error.response.data : 'Some error occurred';
 
   dispatch(setAlert('error', message));
   setTimeout(() => dispatch(clearAlert), 3000);

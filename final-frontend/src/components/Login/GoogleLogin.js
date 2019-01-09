@@ -8,16 +8,15 @@ import config from '../../config';
 export default class GLogin extends Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
+    showAlert: PropTypes.func.isRequired,
   };
 
   googleLoginSuccess = (response) => {
-    console.log(response);
-
-    this.props.login(response.code);
+    this.props.login(response.tokenObj.id_token);
   };
 
   googleLoginFailure = (response) => {
-    console.log(false, response.error);
+    this.props.showAlert('error', response.error);
   };
 
   render() {
@@ -25,7 +24,6 @@ export default class GLogin extends Component {
       <div>
         <GoogleLogin
           clientId={config.GOOGLE_CLIENT_ID}
-          responseType="code"
           onSuccess={this.googleLoginSuccess}
           onFailure={this.googleLoginFailure}
         />
