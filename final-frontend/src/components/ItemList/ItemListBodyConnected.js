@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import ItemListBody from './ItemListBody';
 import checkLoggedIn from '../../utils/auth';
 import { deleteItem } from '../../actions/item';
+import { getItems, getLatestItems } from '../../actions/items';
 
 
 const mapStateToProps = ({ items, auth }) => ({
@@ -13,6 +14,15 @@ const mapStateToProps = ({ items, auth }) => ({
 
 
 const mapDispatchToProps = dispatch => ({
+  getItems: (categoryId) => {
+    if (categoryId) {
+      // Get all items in the category
+      dispatch(getItems(categoryId));
+    } else {
+      // categoryId is undefined, get latest items
+      dispatch(getLatestItems());
+    }
+  },
   deleteItem: (categoryId, itemId) => dispatch(deleteItem(categoryId, itemId)),
 });
 

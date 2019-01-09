@@ -2,9 +2,26 @@ import React, { Component } from 'react';
 import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
 
 class ItemListBody extends Component {
+  componentDidMount() {
+    const { categoryId } = this.props.match.params;
+    this.props.getItems(categoryId);
+  }
+
+  componentDidUpdate(prevProps) {
+    // Check if the categoryId in the URL has changed, so that we can get items if necessary
+    const prevCategoryId = prevProps.match.params.categoryId;
+    const nextCategoryId = this.props.match.params.categoryId;
+
+    if (prevCategoryId !== nextCategoryId) {
+      // The categoryId from URL has changed, we need to get new items
+      this.props.getItems(nextCategoryId);
+    }
+  }
+
   handleDeleteItem = (event) => {
     const itemId = parseInt(event.currentTarget.getAttribute('item-id'), 10);
     const item = this.props.items.filter(it => (it.id === itemId))[0];
@@ -55,7 +72,9 @@ class ItemListBody extends Component {
 ItemListBody.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   userId: PropTypes.number.isRequired,
+  getItems: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
 };
 
 

@@ -17,3 +17,12 @@ export const getItems = categoryId => dispatch => request.get(`/categories/${cat
   .catch(
     error => dispatch(showError(error)),
   );
+
+
+export const getLatestItems = () => dispatch => request.get('/items')
+  .then(
+    response => dispatch(getItemsSuccess(response.data)),
+  )
+  .catch(
+    error => dispatch(showError(error)),
+  );
