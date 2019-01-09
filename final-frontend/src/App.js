@@ -11,6 +11,7 @@ import NewCategory from './components/NewCategory';
 import NewItem from './components/NewItem';
 import Item from './components/Item';
 import { getCategories } from './actions/categories';
+import requireAuth from './utils/wrappers/requireAuth';
 
 
 class App extends Component {
@@ -34,8 +35,8 @@ class App extends Component {
             <Route exact path="/" component={Main} />
             <Route exact path="/categories/:categoryId" component={Main} />
             <Route path="/login" component={Login} />
-            <Route path="/new-category" component={NewCategory} />
-            <Route path="/new-item" component={NewItem} />
+            <Route path="/new-category" component={requireAuth(NewCategory)} />
+            <Route path="/new-item" component={requireAuth(NewItem)} />
             <Route path="/categories/:categoryId/items/:itemId" component={Item} />
             <Redirect to="/" />
           </Switch>
