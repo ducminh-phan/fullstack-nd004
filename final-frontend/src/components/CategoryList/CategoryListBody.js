@@ -3,7 +3,7 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 
-class CategoryList extends Component {
+class CategoryListBody extends Component {
   handleSelectCategory = (event) => {
     const categoryID = parseInt(event.currentTarget.getAttribute('category-id'), 10);
 
@@ -36,11 +36,11 @@ class CategoryList extends Component {
 }
 
 
-CategoryList.propTypes = {
+CategoryListBody.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectCategory: PropTypes.func.isRequired,
   selectedCategoryID: PropTypes.number.isRequired,
 };
 
 
-export default CategoryList;
+export default CategoryListBody;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import ItemHead from './ItemHead';
+import ItemListHead from './ItemListHead';
 import checkLoggedIn from '../../utils/auth';
 
 
@@ -11,4 +11,4 @@ const mapStateToProps = ({ auth }) => ({
 
 export default connect(
   mapStateToProps,
-)(ItemHead);
+)(ItemListHead);

@@ -7,12 +7,12 @@ import PropTypes from 'prop-types';
 /**
  * @return {null}
  */
-function ItemHead(props) {
+function CategoryListHead(props) {
   if (props.isLoggedIn) {
     return (
-      <div id="item-list-top">
-        <LinkContainer to="/new-item">
-          <Button>Add Item</Button>
+      <div id="category-list-top">
+        <LinkContainer to="/new-category">
+          <Button>Add Category</Button>
         </LinkContainer>
       </div>
     );
@@ -22,9 +22,9 @@ function ItemHead(props) {
 }
 
 
-ItemHead.propTypes = {
+CategoryListHead.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
 };
 
 
-export default ItemHead;
+export default CategoryListHead;

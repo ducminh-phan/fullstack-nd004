@@ -3,7 +3,7 @@ import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 
-class ItemList extends Component {
+class ItemListBody extends Component {
   handleDeleteItem = (event) => {
     const itemID = parseInt(event.currentTarget.getAttribute('item-id'), 10);
 
@@ -47,11 +47,13 @@ class ItemList extends Component {
   }
 }
 
-ItemList.propTypes = {
+
+ItemListBody.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedCategoryID: PropTypes.number.isRequired,
   userId: PropTypes.number.isRequired,
   deleteItem: PropTypes.func.isRequired,
 };
 
-export default ItemList;
+
+export default ItemListBody;

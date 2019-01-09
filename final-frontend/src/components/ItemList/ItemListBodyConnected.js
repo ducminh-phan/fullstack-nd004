@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import ItemList from './ItemList';
+import ItemListBody from './ItemListBody';
 import checkLoggedIn from '../../utils/auth';
 import { deleteItem } from '../../actions/item';
 
@@ -20,4 +20,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ItemList);
+)(ItemListBody);

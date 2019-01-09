@@ -1,16 +1,16 @@
 import React from 'react';
 
-import Category from './Category';
-import Item from './Item';
+import CategoryList from './CategoryList';
+import ItemList from './ItemList';
 
 
 const Main = () => (
   <div className="row">
     <div className="col-sm-6">
-      <Category />
+      <CategoryList />
     </div>
     <div className="col-sm-6">
-      <Item />
+      <ItemList />
     </div>
   </div>
 );

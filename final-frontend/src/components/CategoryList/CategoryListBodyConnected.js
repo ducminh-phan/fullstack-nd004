@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { selectCategory } from '../../actions/category';
-import CategoryList from './CategoryList';
+import CategoryListBody from './CategoryListBody';
 
 
 const mapStateToProps = ({ categories, category }) => ({
@@ -18,4 +18,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CategoryList);
+)(CategoryListBody);
