@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
@@ -58,15 +58,11 @@ class ItemListBody extends Component {
                 {this.props.userId === item.user.id
                   ? (
                     <span className="pull-right">
-                      <Button
-                        bsStyle="danger"
-                        bsSize="xs"
-                        className="contact-remove"
+                      <Glyphicon
+                        glyph="remove"
                         item-id={item.id}
                         onClick={this.handleDeleteItem}
-                      >
-                        <Glyphicon glyph="remove" />
-                      </Button>
+                      />
                     </span>
                   )
                   : null}
