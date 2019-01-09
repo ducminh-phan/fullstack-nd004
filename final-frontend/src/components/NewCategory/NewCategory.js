@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-import formWrapper from '../utils/wrappers/formWrapper';
-import { authRequest } from '../utils/request';
+import formWrapper from '../../utils/wrappers/formWrapper';
 
 
 class NewCategoryBody extends Component {
   static propTypes = {
-    changeStatus: PropTypes.func.isRequired,
+    addCategory: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -28,13 +27,7 @@ class NewCategoryBody extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    authRequest.post('/categories', {
-      name: this.state.name,
-    }).then(() => {
-      this.props.changeStatus(true, 'Added successfully');
-    }).catch((error) => {
-      this.props.changeStatus(false, error.response.data.error_message);
-    });
+    this.props.addCategory(this.state.name);
   };
 
   validateForm() {

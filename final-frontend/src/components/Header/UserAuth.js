@@ -1,41 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Navbar, NavItem } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import PropTypes from 'prop-types';
 
 
-import Auth from '../../utils/auth';
-import Storage from '../../utils/storage';
-
-
-class UserAuth extends Component {
-  logout = () => {
-    Storage.clear();
-    this.props.history.push('/');
-  };
-
-  render() {
-    if (Auth.isAuthenticated()) {
-      return (
-        <React.Fragment>
-          <Navbar.Text id="username">
-            {Storage.getUserName()}
-          </Navbar.Text>
-          <NavItem onClick={this.logout}>
-            Log out
-          </NavItem>
-        </React.Fragment>
-      );
-    }
-
+const UserAuth = (props) => {
+  if (props.isLoggedIn) {
     return (
-      <LinkContainer to="/login">
-        <NavItem>
-          Log In
+      <React.Fragment>
+        <Navbar.Text id="username">
+          {props.username}
+        </Navbar.Text>
+        <NavItem onClick={props.logout}>
+          Log out
         </NavItem>
-      </LinkContainer>
+      </React.Fragment>
     );
   }
-}
 
-export default withRouter(UserAuth);
+  return (
+    <LinkContainer to="/login">
+      <NavItem>
+        Log In
+      </NavItem>
+    </LinkContainer>
+  );
+};
+
+
+UserAuth.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  username: PropTypes.string.isRequired,
+  logout: PropTypes.func.isRequired,
+};
+
+export default UserAuth;

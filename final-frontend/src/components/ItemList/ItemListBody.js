@@ -1,27 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Auth from '../utils/auth';
-import Storage from '../utils/storage';
 
+class ItemListBody extends Component {
+  handleDeleteItem = (event) => {
+    const itemID = parseInt(event.currentTarget.getAttribute('item-id'), 10);
 
-const ItemList = (props) => {
-  const { items } = props;
+    this.props.deleteItem(this.props.selectedCategoryID, itemID);
+  };
 
-  return (
-    <div id="item">
-      {Auth.isAuthenticated()
-        ? (
-          <div id="item-list-top">
-            <Link to="/new-item" className="btn btn-default">
-              Add Item
-            </Link>
-          </div>
-        )
-        : null}
+  render() {
+    const { items } = this.props;
 
+    return (
       <div id="item-content" className="vertical-pad">
         <ListGroup id="item-list">
           {items.map(item => (
@@ -31,13 +23,15 @@ const ItemList = (props) => {
             >
               <div className="clearfix">
                 {item.name}
-                {Storage.getUserID() === item.user.id
+                {this.props.userId === item.user.id
                   ? (
                     <span className="pull-right">
                       <Button
                         bsStyle="danger"
                         bsSize="xs"
                         className="contact-remove"
+                        item-id={item.id}
+                        onClick={this.handleDeleteItem}
                       >
                         <Glyphicon glyph="remove" />
                       </Button>
@@ -49,12 +43,17 @@ const ItemList = (props) => {
           ))}
         </ListGroup>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-ItemList.propTypes = {
+
+ItemListBody.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedCategoryID: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
+  deleteItem: PropTypes.func.isRequired,
 };
 
-export default ItemList;
+
+export default ItemListBody;

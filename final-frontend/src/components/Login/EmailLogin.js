@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import { request } from '../../utils/request';
-import Auth from '../../utils/auth';
-import Storage from '../../utils/storage';
 
 
 export default class EmailLogin extends Component {
   static propTypes = {
-    changeStatus: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      isAuthenticated: Auth.isAuthenticated(),
       email: '',
       password: '',
     };
@@ -32,15 +26,7 @@ export default class EmailLogin extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    request.post('/login', {
-      email: this.state.email,
-      password: this.state.password,
-    }).then((response) => {
-      Storage.setToken(response.data);
-      this.setState({ isAuthenticated: true });
-    }).catch((error) => {
-      this.props.changeStatus(false, error.response.data.error_message);
-    });
+    this.props.login(this.state.email, this.state.password);
   };
 
   validateForm() {
@@ -48,10 +34,6 @@ export default class EmailLogin extends Component {
   }
 
   render() {
-    if (this.state.isAuthenticated) {
-      return <Redirect to="/" />;
-    }
-
     return (
       <div className="login">
         <form onSubmit={this.handleSubmit} className="login-form">
