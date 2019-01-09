@@ -1,21 +1,21 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { selectCategory } from '../../actions/category';
+import { getItems } from '../../actions/items';
 import CategoryListBody from './CategoryListBody';
 
 
-const mapStateToProps = ({ categories, category }) => ({
+const mapStateToProps = ({ categories }) => ({
   categories,
-  selectedCategoryID: category.selectedCategoryID,
 });
 
 
 const mapDispatchToProps = dispatch => ({
-  selectCategory: categoryId => dispatch(selectCategory(categoryId)),
+  getItems: categoryId => dispatch(getItems(categoryId)),
 });
 
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CategoryListBody);
+)(CategoryListBody));

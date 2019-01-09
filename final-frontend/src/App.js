@@ -32,6 +32,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path="/" component={Main} />
+            <Route exact path="/categories/:categoryId" component={Main} />
             <Route path="/login" component={Login} />
             <Route path="/new-category" component={NewCategory} />
             <Route path="/new-item" component={NewItem} />

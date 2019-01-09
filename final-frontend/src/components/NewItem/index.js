@@ -4,9 +4,8 @@ import NewItem from './NewItem';
 import { addItem } from '../../actions/item';
 
 
-const mapStateToProps = ({ categories, category }) => ({
+const mapStateToProps = ({ categories }) => ({
   categories,
-  selectedCategoryID: category.selectedCategoryID,
 });
 
 

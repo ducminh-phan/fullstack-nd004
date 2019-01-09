@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import ItemListBody from './ItemListBody';
 import checkLoggedIn from '../../utils/auth';
 import { deleteItem } from '../../actions/item';
 
 
-const mapStateToProps = ({ category, auth }) => ({
-  items: category ? category.items : [],
-  selectedCategoryID: category.selectedCategoryID,
+const mapStateToProps = ({ items, auth }) => ({
+  items,
   userId: checkLoggedIn(auth) ? auth.user.id : 0,
 });
 
@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ItemListBody);
+)(ItemListBody));
