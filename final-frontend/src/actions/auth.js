@@ -1,8 +1,8 @@
 import { request } from '../utils/request';
+import { showError } from './alert';
 import Storage from '../utils/storage';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
 
 
@@ -12,12 +12,6 @@ export const loginSuccess = (token, user) => ({
     token,
     user,
   },
-});
-
-
-export const loginFailure = message => ({
-  type: LOGIN_FAILURE,
-  message,
 });
 
 
@@ -39,8 +33,7 @@ function handleLoginSuccess(response, dispatch) {
 export const emailLogin = (email, password) => dispatch => request.post('/login', { email, password })
   .then(response => handleLoginSuccess(response, dispatch))
   .catch(
-    error => (
-      dispatch(loginFailure(error.message))
+    error => (dispatch(showError(error))
     ),
   );
 
@@ -49,7 +42,7 @@ export const googleLogin = token => dispatch => request.post('/login/google', { 
   .then(response => handleLoginSuccess(response, dispatch))
   .catch(
     error => (
-      dispatch(loginFailure(error.message))
+      dispatch(showError(error))
     ),
   );
 

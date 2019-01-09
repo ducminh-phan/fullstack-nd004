@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Main from './components/Main';
 import Header from './components/Header';
+import Flash from './components/Flash';
 import Login from './components/Login';
 import NewCategory from './components/NewCategory';
 import NewItem from './components/NewItem';
@@ -24,6 +25,8 @@ class App extends Component {
     return (
       <div className="App container">
         <Header />
+
+        <Flash />
 
         <div>
           <Switch>
