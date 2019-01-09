@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
@@ -23,10 +22,21 @@ class ItemListBody extends Component {
   }
 
   handleDeleteItem = (event) => {
+    // Prevent click event on the ListGroupItem, so that we are not routed to the item page
+    event.stopPropagation();
+
     const itemId = parseInt(event.currentTarget.getAttribute('item-id'), 10);
     const item = this.props.items.filter(it => (it.id === itemId))[0];
 
     this.props.deleteItem(item.category.id, itemId);
+  };
+
+  handleClick = (event) => {
+    const itemId = event.currentTarget.getAttribute('item-id');
+    const categoryId = event.currentTarget.getAttribute('category-id');
+    const url = `/categories/${categoryId}/items/${itemId}`;
+
+    this.props.history.push(url);
   };
 
   render() {
@@ -39,11 +49,12 @@ class ItemListBody extends Component {
             <ListGroupItem
               key={item.id}
               className="contact-list-item"
+              item-id={item.id}
+              category-id={item.category.id}
+              onClick={this.handleClick}
             >
               <div className="clearfix">
-                <Link to={`/categories/${item.category.id}/items/${item.id}`}>
-                  {item.name}
-                </Link>
+                {item.name}
                 {this.props.userId === item.user.id
                   ? (
                     <span className="pull-right">
@@ -75,6 +86,7 @@ ItemListBody.propTypes = {
   getItems: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
   match: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 

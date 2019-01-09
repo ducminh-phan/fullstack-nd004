@@ -1,39 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
 
-const CategoryListBody = (props) => {
-  const { categories } = props;
-  const { categoryId } = props.match.params;
+class CategoryListBody extends Component {
+  handleClick = (event) => {
+    const categoryId = event.currentTarget.getAttribute('category-id');
 
-  return (
-    <div id="category-content" className="vertical-pad">
-      <ListGroup id="category-list">
-        {categories.map(category => (
-          <ListGroupItem
-            key={category.id}
-            className="contact-list-item"
-            disabled={categoryId === category.id.toString()}
-          >
-            <Link
-              to={`/categories/${category.id}`}
+    this.props.history.push(`/categories/${categoryId}`);
+  };
+
+  render() {
+    const { categories } = this.props;
+    const { categoryId } = this.props.match.params;
+
+    return (
+      <div id="category-content" className="vertical-pad">
+        <ListGroup id="category-list">
+          {categories.map(category => (
+            <ListGroupItem
+              key={category.id}
+              category-id={category.id}
+              className="contact-list-item"
+              disabled={categoryId === category.id.toString()}
+              onClick={this.handleClick}
             >
               {category.name}
-            </Link>
-          </ListGroupItem>
-        ))}
-      </ListGroup>
-    </div>
-  );
-};
+            </ListGroupItem>
+          ))}
+        </ListGroup>
+      </div>
+    );
+  }
+}
 
 
 CategoryListBody.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 
