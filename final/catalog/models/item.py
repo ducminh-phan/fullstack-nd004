@@ -34,6 +34,10 @@ class Item(db.Model):
     def get_latests(cls):
         return cls.query.order_by(cls.id.desc()).limit(5).all()
 
+    def delete(self):
+        db_session.delete(self)
+        db_session.commit()
+
     def save_to_db(self):
         db_session.add(self)
         db_session.commit()

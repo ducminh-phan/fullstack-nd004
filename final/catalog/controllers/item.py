@@ -61,4 +61,6 @@ def delete_item(category, item, user):
     if item.category != category:
         raise errors.BadRequest()
 
+    item.delete()
+
     return jsonify({}), 204

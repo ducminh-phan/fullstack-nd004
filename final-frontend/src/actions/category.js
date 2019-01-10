@@ -1,15 +1,16 @@
 import { authRequest } from '../utils/request';
-import { showError } from './alert';
-
-export const ADD_CATEGORY_SUCCESS = 'ADD_CATEGORY_SUCCESS';
+import { showAlert, showError } from './alert';
 
 
-export const addCategorySuccess = category => ({
-  type: ADD_CATEGORY_SUCCESS,
-  category,
-});
+const addCategory = name => dispatch => authRequest.post('/categories', { name })
+  .then(
+    () => {
+      dispatch(showAlert('success', 'Item was deleted successfully.'));
+    },
+  )
+  .catch(
+    error => dispatch(showError(error)),
+  );
 
 
-export const addCategory = name => dispatch => authRequest.post('/categories', { name })
-  .then(category => dispatch(addCategorySuccess(category)))
-  .catch(error => dispatch(showError(error)));
+export default addCategory;
